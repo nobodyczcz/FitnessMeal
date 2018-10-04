@@ -1,0 +1,163 @@
+﻿@model FitnessMeal.Models.FOOD_ITEM
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>FOOD_ITEM</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Restaurant.RESTAURANT_NAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Restaurant.RESTAURANT_NAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ITEM_NAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ITEM_NAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DESCRIPTION)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DESCRIPTION)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CUISINE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CUISINE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ENERGY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ENERGY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PRICE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PRICE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IS_DRINK)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IS_DRINK)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IS_PURE_VEGI)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IS_PURE_VEGI)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HAS_BEEF)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HAS_BEEF)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HAS_PORK)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HAS_PORK)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HAS_OTHERMEAT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HAS_OTHERMEAT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HAS_CHICKEN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HAS_CHICKEN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HAS_EGG)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HAS_EGG)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HAS_MILK)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HAS_MILK)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HAS_NUTS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HAS_NUTS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HAS_VEGI)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HAS_VEGI)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HAS_FRUIT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HAS_FRUIT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HAS_RICE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HAS_RICE)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ITEM_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,88 @@
+﻿@model IEnumerable<FitnessMeal.Models.Restaurant>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.USER.USERNAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RESTAURANT_NAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DESCRIPTION)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Main_CUSINE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ADRESS_FIRST_LINE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.STREET_NO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.STREET_RD)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SURBURB)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.POSTCODE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.STATE)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.USER.USERNAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RESTAURANT_NAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DESCRIPTION)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Main_CUSINE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ADRESS_FIRST_LINE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.STREET_NO)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.STREET_RD)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SURBURB)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.POSTCODE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.STATE)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.RESTAURANT_ID }) |
+            @Html.ActionLink("Manage", "../FOOD_ITEM/Index", new { id=item.RESTAURANT_ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.RESTAURANT_ID })
+        </td>
+    </tr>
+}
+
+</table>

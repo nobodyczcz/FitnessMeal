@@ -1,0 +1,99 @@
+﻿@model FitnessMeal.Models.Restaurant
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Restaurant</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.USER.USERNAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.USER.USERNAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RESTAURANT_NAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RESTAURANT_NAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DESCRIPTION)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DESCRIPTION)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Main_CUSINE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Main_CUSINE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ADRESS_FIRST_LINE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ADRESS_FIRST_LINE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.STREET_NO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.STREET_NO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.STREET_RD)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.STREET_RD)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SURBURB)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SURBURB)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.POSTCODE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.POSTCODE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.STATE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.STATE)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.RESTAURANT_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

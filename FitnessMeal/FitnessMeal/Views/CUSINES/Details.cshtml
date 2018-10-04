@@ -1,0 +1,19 @@
+﻿@model FitnessMeal.Models.CUSINES
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>CUSINES</h4>
+    <hr />
+    <dl class="dl-horizontal">
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CUSINE }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

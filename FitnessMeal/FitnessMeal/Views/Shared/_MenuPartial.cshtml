@@ -1,0 +1,28 @@
+﻿@using Microsoft.AspNet.Identity
+@using FitnessMeal.Models;
+
+@if (User.Identity.IsAuthenticated)
+{
+    var id = User.Identity.GetUserId();
+    var db = new FitnessMealModel();
+    var theUser = db.USERs.Find(id);
+    if (theUser.User_Type == "restaurant_owner")
+    {
+        <li>
+            <a href="@Url.Action("Index", "Restaurants")">
+                <i class="nc-icon nc-bank"></i>
+                <p>Manage Restaurant</p>
+            </a>
+        </li>
+    }
+    else
+    {
+        <li>
+            <a href="@Url.Action("Index", "USERs")">
+                <i class="nc-icon nc-bank"></i>
+                <p>Manage Profile</p>
+            </a>
+        </li>
+    }
+
+}
