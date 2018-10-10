@@ -53,7 +53,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Main_CUSINE, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div>
-                    @Html.DropDownListFor(model => model.Main_CUSINE, ViewBag.CUSINES as SelectList, "--Select Cuisine--", new { @class = "form-control" });
+                    @Html.DropDownListFor(model => model.Main_CUSINE, ViewBag.CUSINES as SelectList, "--Select Cuisine--", new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Main_CUSINE, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -277,7 +277,7 @@
 
         $('#search').click(function () {
             var theUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=" + $("#address").val().replace(" ", "+") + "&key=AIzaSyCdniQ6G8exQ_38DM0nbEigXUDmh6mscEc"
-
+            console.log(theUrl)
             $.ajax({
                 url: theUrl, success: function (result) { successFunction(result) }
             });

@@ -1,0 +1,35 @@
+﻿@model FitnessMeal.Models.MEAL_ITEMS
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>MEAL_ITEMS</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FOOD_ITEM.ITEM_NAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FOOD_ITEM.ITEM_NAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MEAL.MEAL_ID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MEAL.MEAL_ID)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

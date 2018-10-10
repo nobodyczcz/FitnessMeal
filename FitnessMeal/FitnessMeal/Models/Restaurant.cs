@@ -14,10 +14,11 @@ namespace FitnessMeal.Models
         {
             FOOD_ITEM = new HashSet<FOOD_ITEM>();
             RESERVE_PICK_UP = new HashSet<RESERVE_PICK_UP>();
+            MEAL = new HashSet<MEAL>();
         }
 
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int RESTAURANT_ID { get; set; }
 
         [Required]
@@ -64,6 +65,10 @@ namespace FitnessMeal.Models
         [Column(TypeName = "numeric")]
         public decimal LONGITUDE { get; set; }
 
+        public double? SCORE { get; set; }
+
+        public double? DISTANCE { get; set; }
+
 
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -72,7 +77,11 @@ namespace FitnessMeal.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RESERVE_PICK_UP> RESERVE_PICK_UP { get; set; }
 
-        
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MEAL> MEAL { get; set; }
+
+
+
 
         public virtual USER USER { get; set; }
         public virtual CUSINES CUSINES { get; set; }

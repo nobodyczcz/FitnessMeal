@@ -1,0 +1,309 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FitnessMealModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="CUSINES">
+    <Key>
+      <PropertyRef Name="CUSINE" />
+    </Key>
+    <Property Name="CUSINE" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Restaurant" Relationship="Self.FK__Restauran__Main___3E723F9C" FromRole="CUSINES" ToRole="Restaurant" />
+  </EntityType>
+  <EntityType Name="FOOD_ITEM">
+    <Key>
+      <PropertyRef Name="ITEM_ID" />
+    </Key>
+    <Property Name="ITEM_ID" Type="Int32" Nullable="false" />
+    <Property Name="RESTAURANT_ID" Type="Int32" Nullable="false" />
+    <Property Name="ITEM_NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DESCRIPTION" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CUISINE" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ENERGY" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="PRICE" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="IS_DRINK" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="IS_PURE_VEGI" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="HAS_BEEF" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="HAS_PORK" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="HAS_OTHERMEAT" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="HAS_CHICKEN" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="HAS_EGG" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="HAS_MILK" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="HAS_NUTS" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="HAS_VEGI" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="HAS_FRUIT" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="HAS_RICE" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Restaurant" Relationship="Self.FK__FOOD_ITEM__RESTA__36D11DD4" FromRole="FOOD_ITEM" ToRole="Restaurant" />
+    <NavigationProperty Name="ORDER_ITEM" Relationship="Self.FK__ORDER_ITE__ITEM___35DCF99B" FromRole="FOOD_ITEM" ToRole="ORDER_ITEM" />
+    <NavigationProperty Name="MEAL" Relationship="Self.MEAL_ITEMS" FromRole="FOOD_ITEM" ToRole="MEAL" />
+  </EntityType>
+  <EntityType Name="MEAL">
+    <Key>
+      <PropertyRef Name="MEAL_ID" />
+    </Key>
+    <Property Name="MEAL_ID" Type="Int32" Nullable="false" />
+    <Property Name="TOTAL_PRICE" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="TOTAL_ENERGY" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="DISCOUNT" Type="Decimal" Precision="3" Scale="2" />
+    <NavigationProperty Name="ORDER_MEAL" Relationship="Self.FK__ORDER_MEA__MEAL___38B96646" FromRole="MEAL" ToRole="ORDER_MEAL" />
+    <NavigationProperty Name="FOOD_ITEM" Relationship="Self.MEAL_ITEMS" FromRole="MEAL" ToRole="FOOD_ITEM" />
+    <Property Name="RESTAURANT_ID" Type="Int32" />
+    <NavigationProperty Name="Restaurant" Relationship="FitnessMealModel.foreignkey" FromRole="MEAL" ToRole="Restaurant" />
+  </EntityType>
+  <EntityType Name="ORDER_ITEM">
+    <Key>
+      <PropertyRef Name="ORDER_ID" />
+      <PropertyRef Name="ITEM_ID" />
+    </Key>
+    <Property Name="ORDER_ID" Type="Int32" Nullable="false" />
+    <Property Name="ITEM_ID" Type="Int32" Nullable="false" />
+    <Property Name="QUANTITY" Type="Decimal" Precision="2" Scale="0" Nullable="false" />
+    <Property Name="TOTAL_PRICE" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="TOTAL_ENERGY" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+    <NavigationProperty Name="FOOD_ITEM" Relationship="Self.FK__ORDER_ITE__ITEM___35DCF99B" FromRole="ORDER_ITEM" ToRole="FOOD_ITEM" />
+    <NavigationProperty Name="RESERVE_PICK_UP" Relationship="Self.FK__ORDER_ITE__ORDER__3AA1AEB8" FromRole="ORDER_ITEM" ToRole="RESERVE_PICK_UP" />
+  </EntityType>
+  <EntityType Name="ORDER_MEAL">
+    <Key>
+      <PropertyRef Name="ORDER_ID" />
+      <PropertyRef Name="MEAL_ID" />
+    </Key>
+    <Property Name="ORDER_ID" Type="Int32" Nullable="false" />
+    <Property Name="MEAL_ID" Type="Int32" Nullable="false" />
+    <Property Name="QUANTITY" Type="Decimal" Precision="2" Scale="0" Nullable="false" />
+    <Property Name="TOTAL_PRICE" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="TOTAL_ENERGY" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+    <NavigationProperty Name="MEAL" Relationship="Self.FK__ORDER_MEA__MEAL___38B96646" FromRole="ORDER_MEAL" ToRole="MEAL" />
+    <NavigationProperty Name="RESERVE_PICK_UP" Relationship="Self.FK__ORDER_MEA__ORDER__3B95D2F1" FromRole="ORDER_MEAL" ToRole="RESERVE_PICK_UP" />
+  </EntityType>
+  <EntityType Name="RESERVE_PICK_UP">
+    <Key>
+      <PropertyRef Name="ORDER_ID" />
+    </Key>
+    <Property Name="ORDER_ID" Type="Int32" Nullable="false" />
+    <Property Name="USER_ID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="RESTAURANT_ID" Type="Int32" Nullable="false" />
+    <Property Name="ORDER_TIME" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="PICK_UP_TIME" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ORDER_PRICE" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="NO_OF_EATER" Type="Decimal" Precision="2" Scale="0" />
+    <Property Name="TOTAL_ENERGY" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+    <Property Name="STATE" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="REMARKS" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ORDER_ITEM" Relationship="Self.FK__ORDER_ITE__ORDER__3AA1AEB8" FromRole="RESERVE_PICK_UP" ToRole="ORDER_ITEM" />
+    <NavigationProperty Name="ORDER_MEAL" Relationship="Self.FK__ORDER_MEA__ORDER__3B95D2F1" FromRole="RESERVE_PICK_UP" ToRole="ORDER_MEAL" />
+    <NavigationProperty Name="Restaurant" Relationship="Self.FK__RESERVE_P__RESTA__3D7E1B63" FromRole="RESERVE_PICK_UP" ToRole="Restaurant" />
+    <NavigationProperty Name="USER" Relationship="Self.FK__RESERVE_P__USER___3C89F72A" FromRole="RESERVE_PICK_UP" ToRole="USER" />
+  </EntityType>
+  <EntityType Name="Restaurant">
+    <Key>
+      <PropertyRef Name="RESTAURANT_ID" />
+    </Key>
+    <Property Name="RESTAURANT_ID" Type="Int32" Nullable="false" />
+    <Property Name="RESTAURANT_NAME" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DESCRIPTION" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Main_CUSINE" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="USER_ID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ADRESS_FIRST_LINE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="STREET_NO" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="STREET_RD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="SURBURB" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="POSTCODE" Type="Int32" Nullable="false" />
+    <Property Name="STATE" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="latitude" Type="Decimal" Precision="10" Scale="6" />
+    <Property Name="longitude" Type="Decimal" Precision="10" Scale="6" />
+    <NavigationProperty Name="CUSINES" Relationship="Self.FK__Restauran__Main___3E723F9C" FromRole="Restaurant" ToRole="CUSINES" />
+    <NavigationProperty Name="FOOD_ITEM" Relationship="Self.FK__FOOD_ITEM__RESTA__36D11DD4" FromRole="Restaurant" ToRole="FOOD_ITEM" />
+    <NavigationProperty Name="RESERVE_PICK_UP" Relationship="Self.FK__RESERVE_P__RESTA__3D7E1B63" FromRole="Restaurant" ToRole="RESERVE_PICK_UP" />
+    <NavigationProperty Name="USER" Relationship="Self.FK__Restauran__USER___3F6663D5" FromRole="Restaurant" ToRole="USER" />
+    <NavigationProperty Name="MEAL" Relationship="FitnessMealModel.foreignkey" FromRole="Restaurant" ToRole="MEAL" />
+  </EntityType>
+  <EntityType Name="USER">
+    <Key>
+      <PropertyRef Name="USER_ID" />
+    </Key>
+    <Property Name="USER_ID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="USERNAME" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="EMAIL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DOB" Type="DateTime" Precision="0" />
+    <Property Name="DESCRIPTION" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="User_Type" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="RESERVE_PICK_UP" Relationship="Self.FK__RESERVE_P__USER___3C89F72A" FromRole="USER" ToRole="RESERVE_PICK_UP" />
+    <NavigationProperty Name="Restaurant" Relationship="Self.FK__Restauran__USER___3F6663D5" FromRole="USER" ToRole="Restaurant" />
+  </EntityType>
+  <Association Name="FK__Restauran__Main___3E723F9C">
+    <End Role="CUSINES" Type="Self.CUSINES" Multiplicity="1" />
+    <End Role="Restaurant" Type="Self.Restaurant" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CUSINES">
+        <PropertyRef Name="CUSINE" />
+      </Principal>
+      <Dependent Role="Restaurant">
+        <PropertyRef Name="Main_CUSINE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__FOOD_ITEM__RESTA__36D11DD4">
+    <End Role="Restaurant" Type="Self.Restaurant" Multiplicity="1" />
+    <End Role="FOOD_ITEM" Type="Self.FOOD_ITEM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Restaurant">
+        <PropertyRef Name="RESTAURANT_ID" />
+      </Principal>
+      <Dependent Role="FOOD_ITEM">
+        <PropertyRef Name="RESTAURANT_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ORDER_ITE__ITEM___35DCF99B">
+    <End Role="FOOD_ITEM" Type="Self.FOOD_ITEM" Multiplicity="1" />
+    <End Role="ORDER_ITEM" Type="Self.ORDER_ITEM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FOOD_ITEM">
+        <PropertyRef Name="ITEM_ID" />
+      </Principal>
+      <Dependent Role="ORDER_ITEM">
+        <PropertyRef Name="ITEM_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ORDER_MEA__MEAL___38B96646">
+    <End Role="MEAL" Type="Self.MEAL" Multiplicity="1" />
+    <End Role="ORDER_MEAL" Type="Self.ORDER_MEAL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MEAL">
+        <PropertyRef Name="MEAL_ID" />
+      </Principal>
+      <Dependent Role="ORDER_MEAL">
+        <PropertyRef Name="MEAL_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ORDER_ITE__ORDER__3AA1AEB8">
+    <End Role="RESERVE_PICK_UP" Type="Self.RESERVE_PICK_UP" Multiplicity="1" />
+    <End Role="ORDER_ITEM" Type="Self.ORDER_ITEM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RESERVE_PICK_UP">
+        <PropertyRef Name="ORDER_ID" />
+      </Principal>
+      <Dependent Role="ORDER_ITEM">
+        <PropertyRef Name="ORDER_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ORDER_MEA__ORDER__3B95D2F1">
+    <End Role="RESERVE_PICK_UP" Type="Self.RESERVE_PICK_UP" Multiplicity="1" />
+    <End Role="ORDER_MEAL" Type="Self.ORDER_MEAL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RESERVE_PICK_UP">
+        <PropertyRef Name="ORDER_ID" />
+      </Principal>
+      <Dependent Role="ORDER_MEAL">
+        <PropertyRef Name="ORDER_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__RESERVE_P__RESTA__3D7E1B63">
+    <End Role="Restaurant" Type="Self.Restaurant" Multiplicity="1" />
+    <End Role="RESERVE_PICK_UP" Type="Self.RESERVE_PICK_UP" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Restaurant">
+        <PropertyRef Name="RESTAURANT_ID" />
+      </Principal>
+      <Dependent Role="RESERVE_PICK_UP">
+        <PropertyRef Name="RESTAURANT_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__RESERVE_P__USER___3C89F72A">
+    <End Role="USER" Type="Self.USER" Multiplicity="1" />
+    <End Role="RESERVE_PICK_UP" Type="Self.RESERVE_PICK_UP" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USER">
+        <PropertyRef Name="USER_ID" />
+      </Principal>
+      <Dependent Role="RESERVE_PICK_UP">
+        <PropertyRef Name="USER_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Restauran__USER___3F6663D5">
+    <End Role="USER" Type="Self.USER" Multiplicity="1" />
+    <End Role="Restaurant" Type="Self.Restaurant" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USER">
+        <PropertyRef Name="USER_ID" />
+      </Principal>
+      <Dependent Role="Restaurant">
+        <PropertyRef Name="USER_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="MEAL_ITEMS">
+    <End Role="FOOD_ITEM" Type="Self.FOOD_ITEM" Multiplicity="*" />
+    <End Role="MEAL" Type="Self.MEAL" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="CUSINES" EntityType="Self.CUSINES" />
+    <EntitySet Name="FOOD_ITEM" EntityType="Self.FOOD_ITEM" />
+    <EntitySet Name="MEAL" EntityType="Self.MEAL" />
+    <EntitySet Name="ORDER_ITEM" EntityType="Self.ORDER_ITEM" />
+    <EntitySet Name="ORDER_MEAL" EntityType="Self.ORDER_MEAL" />
+    <EntitySet Name="RESERVE_PICK_UP" EntityType="Self.RESERVE_PICK_UP" />
+    <EntitySet Name="Restaurant" EntityType="Self.Restaurant" />
+    <EntitySet Name="USER" EntityType="Self.USER" />
+    <AssociationSet Name="FK__Restauran__Main___3E723F9C" Association="Self.FK__Restauran__Main___3E723F9C">
+      <End Role="CUSINES" EntitySet="CUSINES" />
+      <End Role="Restaurant" EntitySet="Restaurant" />
+    </AssociationSet>
+    <AssociationSet Name="FK__FOOD_ITEM__RESTA__36D11DD4" Association="Self.FK__FOOD_ITEM__RESTA__36D11DD4">
+      <End Role="Restaurant" EntitySet="Restaurant" />
+      <End Role="FOOD_ITEM" EntitySet="FOOD_ITEM" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ORDER_ITE__ITEM___35DCF99B" Association="Self.FK__ORDER_ITE__ITEM___35DCF99B">
+      <End Role="FOOD_ITEM" EntitySet="FOOD_ITEM" />
+      <End Role="ORDER_ITEM" EntitySet="ORDER_ITEM" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ORDER_MEA__MEAL___38B96646" Association="Self.FK__ORDER_MEA__MEAL___38B96646">
+      <End Role="MEAL" EntitySet="MEAL" />
+      <End Role="ORDER_MEAL" EntitySet="ORDER_MEAL" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ORDER_ITE__ORDER__3AA1AEB8" Association="Self.FK__ORDER_ITE__ORDER__3AA1AEB8">
+      <End Role="RESERVE_PICK_UP" EntitySet="RESERVE_PICK_UP" />
+      <End Role="ORDER_ITEM" EntitySet="ORDER_ITEM" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ORDER_MEA__ORDER__3B95D2F1" Association="Self.FK__ORDER_MEA__ORDER__3B95D2F1">
+      <End Role="RESERVE_PICK_UP" EntitySet="RESERVE_PICK_UP" />
+      <End Role="ORDER_MEAL" EntitySet="ORDER_MEAL" />
+    </AssociationSet>
+    <AssociationSet Name="FK__RESERVE_P__RESTA__3D7E1B63" Association="Self.FK__RESERVE_P__RESTA__3D7E1B63">
+      <End Role="Restaurant" EntitySet="Restaurant" />
+      <End Role="RESERVE_PICK_UP" EntitySet="RESERVE_PICK_UP" />
+    </AssociationSet>
+    <AssociationSet Name="FK__RESERVE_P__USER___3C89F72A" Association="Self.FK__RESERVE_P__USER___3C89F72A">
+      <End Role="USER" EntitySet="USER" />
+      <End Role="RESERVE_PICK_UP" EntitySet="RESERVE_PICK_UP" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Restauran__USER___3F6663D5" Association="Self.FK__Restauran__USER___3F6663D5">
+      <End Role="USER" EntitySet="USER" />
+      <End Role="Restaurant" EntitySet="Restaurant" />
+    </AssociationSet>
+    <AssociationSet Name="MEAL_ITEMS" Association="Self.MEAL_ITEMS">
+      <End Role="FOOD_ITEM" EntitySet="FOOD_ITEM" />
+      <End Role="MEAL" EntitySet="MEAL" />
+    </AssociationSet>
+    <AssociationSet Name="foreignkey" Association="FitnessMealModel.foreignkey">
+      <End Role="Restaurant" EntitySet="Restaurant" />
+      <End Role="MEAL" EntitySet="MEAL" />
+    </AssociationSet>
+  </EntityContainer>
+  <Association Name="foreignkey">
+    <End Type="FitnessMealModel.Restaurant" Role="Restaurant" Multiplicity="0..1" />
+    <End Type="FitnessMealModel.MEAL" Role="MEAL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Restaurant">
+        <PropertyRef Name="RESTAURANT_ID" />
+      </Principal>
+      <Dependent Role="MEAL">
+        <PropertyRef Name="RESTAURANT_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

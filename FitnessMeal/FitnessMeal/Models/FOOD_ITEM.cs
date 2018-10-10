@@ -12,11 +12,11 @@ namespace FitnessMeal.Models
         public FOOD_ITEM()
         {
             ORDER_ITEM = new HashSet<ORDER_ITEM>();
-            MEALs = new HashSet<MEAL>();
+            MEAL_ITEMS = new HashSet<MEAL_ITEMS>();
         }
 
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ITEM_ID { get; set; }
 
         [Required]
@@ -93,6 +93,7 @@ namespace FitnessMeal.Models
         public virtual ICollection<ORDER_ITEM> ORDER_ITEM { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MEAL> MEALs { get; set; }
+        public virtual ICollection<MEAL_ITEMS> MEAL_ITEMS { get; set; }
+
     }
 }

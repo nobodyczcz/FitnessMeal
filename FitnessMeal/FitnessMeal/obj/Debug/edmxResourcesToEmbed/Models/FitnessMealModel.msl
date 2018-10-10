@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="FitnessMealModelStoreContainer" CdmEntityContainer="Entities">
+    <EntitySetMapping Name="CUSINES">
+      <EntityTypeMapping TypeName="FitnessMealModel.CUSINES">
+        <MappingFragment StoreEntitySet="CUSINES">
+          <ScalarProperty Name="CUSINE" ColumnName="CUSINE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FOOD_ITEM">
+      <EntityTypeMapping TypeName="FitnessMealModel.FOOD_ITEM">
+        <MappingFragment StoreEntitySet="FOOD_ITEM">
+          <ScalarProperty Name="ITEM_ID" ColumnName="ITEM_ID" />
+          <ScalarProperty Name="RESTAURANT_ID" ColumnName="RESTAURANT_ID" />
+          <ScalarProperty Name="ITEM_NAME" ColumnName="ITEM_NAME" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="CUISINE" ColumnName="CUISINE" />
+          <ScalarProperty Name="ENERGY" ColumnName="ENERGY" />
+          <ScalarProperty Name="PRICE" ColumnName="PRICE" />
+          <ScalarProperty Name="IS_DRINK" ColumnName="IS_DRINK" />
+          <ScalarProperty Name="IS_PURE_VEGI" ColumnName="IS_PURE_VEGI" />
+          <ScalarProperty Name="HAS_BEEF" ColumnName="HAS_BEEF" />
+          <ScalarProperty Name="HAS_PORK" ColumnName="HAS_PORK" />
+          <ScalarProperty Name="HAS_OTHERMEAT" ColumnName="HAS_OTHERMEAT" />
+          <ScalarProperty Name="HAS_CHICKEN" ColumnName="HAS_CHICKEN" />
+          <ScalarProperty Name="HAS_EGG" ColumnName="HAS_EGG" />
+          <ScalarProperty Name="HAS_MILK" ColumnName="HAS_MILK" />
+          <ScalarProperty Name="HAS_NUTS" ColumnName="HAS_NUTS" />
+          <ScalarProperty Name="HAS_VEGI" ColumnName="HAS_VEGI" />
+          <ScalarProperty Name="HAS_FRUIT" ColumnName="HAS_FRUIT" />
+          <ScalarProperty Name="HAS_RICE" ColumnName="HAS_RICE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MEAL">
+      <EntityTypeMapping TypeName="FitnessMealModel.MEAL">
+        <MappingFragment StoreEntitySet="MEAL">
+          <ScalarProperty Name="RESTAURANT_ID" ColumnName="RESTAURANT_ID" />
+          <ScalarProperty Name="MEAL_ID" ColumnName="MEAL_ID" />
+          <ScalarProperty Name="TOTAL_PRICE" ColumnName="TOTAL_PRICE" />
+          <ScalarProperty Name="TOTAL_ENERGY" ColumnName="TOTAL_ENERGY" />
+          <ScalarProperty Name="DISCOUNT" ColumnName="DISCOUNT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ORDER_ITEM">
+      <EntityTypeMapping TypeName="FitnessMealModel.ORDER_ITEM">
+        <MappingFragment StoreEntitySet="ORDER_ITEM">
+          <ScalarProperty Name="ORDER_ID" ColumnName="ORDER_ID" />
+          <ScalarProperty Name="ITEM_ID" ColumnName="ITEM_ID" />
+          <ScalarProperty Name="QUANTITY" ColumnName="QUANTITY" />
+          <ScalarProperty Name="TOTAL_PRICE" ColumnName="TOTAL_PRICE" />
+          <ScalarProperty Name="TOTAL_ENERGY" ColumnName="TOTAL_ENERGY" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ORDER_MEAL">
+      <EntityTypeMapping TypeName="FitnessMealModel.ORDER_MEAL">
+        <MappingFragment StoreEntitySet="ORDER_MEAL">
+          <ScalarProperty Name="ORDER_ID" ColumnName="ORDER_ID" />
+          <ScalarProperty Name="MEAL_ID" ColumnName="MEAL_ID" />
+          <ScalarProperty Name="QUANTITY" ColumnName="QUANTITY" />
+          <ScalarProperty Name="TOTAL_PRICE" ColumnName="TOTAL_PRICE" />
+          <ScalarProperty Name="TOTAL_ENERGY" ColumnName="TOTAL_ENERGY" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RESERVE_PICK_UP">
+      <EntityTypeMapping TypeName="FitnessMealModel.RESERVE_PICK_UP">
+        <MappingFragment StoreEntitySet="RESERVE_PICK_UP">
+          <ScalarProperty Name="ORDER_ID" ColumnName="ORDER_ID" />
+          <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+          <ScalarProperty Name="RESTAURANT_ID" ColumnName="RESTAURANT_ID" />
+          <ScalarProperty Name="ORDER_TIME" ColumnName="ORDER_TIME" />
+          <ScalarProperty Name="PICK_UP_TIME" ColumnName="PICK_UP_TIME" />
+          <ScalarProperty Name="ORDER_PRICE" ColumnName="ORDER_PRICE" />
+          <ScalarProperty Name="NO_OF_EATER" ColumnName="NO_OF_EATER" />
+          <ScalarProperty Name="TOTAL_ENERGY" ColumnName="TOTAL_ENERGY" />
+          <ScalarProperty Name="STATE" ColumnName="STATE" />
+          <ScalarProperty Name="REMARKS" ColumnName="REMARKS" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Restaurant">
+      <EntityTypeMapping TypeName="FitnessMealModel.Restaurant">
+        <MappingFragment StoreEntitySet="Restaurant">
+          <ScalarProperty Name="RESTAURANT_ID" ColumnName="RESTAURANT_ID" />
+          <ScalarProperty Name="RESTAURANT_NAME" ColumnName="RESTAURANT_NAME" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="Main_CUSINE" ColumnName="Main_CUSINE" />
+          <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+          <ScalarProperty Name="ADRESS_FIRST_LINE" ColumnName="ADRESS_FIRST_LINE" />
+          <ScalarProperty Name="STREET_NO" ColumnName="STREET_NO" />
+          <ScalarProperty Name="STREET_RD" ColumnName="STREET/RD" />
+          <ScalarProperty Name="SURBURB" ColumnName="SURBURB" />
+          <ScalarProperty Name="POSTCODE" ColumnName="POSTCODE" />
+          <ScalarProperty Name="STATE" ColumnName="STATE" />
+          <ScalarProperty Name="latitude" ColumnName="latitude" />
+          <ScalarProperty Name="longitude" ColumnName="longitude" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="USER">
+      <EntityTypeMapping TypeName="FitnessMealModel.USER">
+        <MappingFragment StoreEntitySet="USER">
+          <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+          <ScalarProperty Name="USERNAME" ColumnName="USERNAME" />
+          <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+          <ScalarProperty Name="DOB" ColumnName="DOB" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="User_Type" ColumnName="User_Type" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="MEAL_ITEMS" TypeName="FitnessMealModel.MEAL_ITEMS" StoreEntitySet="MEAL_ITEMS">
+      <EndProperty Name="FOOD_ITEM">
+        <ScalarProperty Name="ITEM_ID" ColumnName="ITEM_ID" />
+      </EndProperty>
+      <EndProperty Name="MEAL">
+        <ScalarProperty Name="MEAL_ID" ColumnName="MEAL_ID" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

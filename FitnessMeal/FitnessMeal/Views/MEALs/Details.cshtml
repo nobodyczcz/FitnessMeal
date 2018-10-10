@@ -1,0 +1,43 @@
+﻿@model FitnessMeal.Models.MEAL
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>MEAL</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TOTAL_PRICE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TOTAL_PRICE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TOTAL_ENERGY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TOTAL_ENERGY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DISCOUNT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DISCOUNT)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MEAL_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

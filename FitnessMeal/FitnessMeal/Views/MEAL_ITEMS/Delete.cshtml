@@ -1,0 +1,41 @@
+﻿@model FitnessMeal.Models.MEAL_ITEMS
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>MEAL_ITEMS</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FOOD_ITEM.ITEM_NAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FOOD_ITEM.ITEM_NAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MEAL.MEAL_ID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MEAL.MEAL_ID)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

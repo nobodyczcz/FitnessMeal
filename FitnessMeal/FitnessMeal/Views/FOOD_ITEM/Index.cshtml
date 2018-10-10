@@ -5,75 +5,44 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>@ViewBag.RestaurantName</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", new { id = ViewBag.RestaurantID })
 </p>
 <table class="table">
     <tr>
+        
         <th>
-            @Html.DisplayNameFor(model => model.Restaurant.RESTAURANT_NAME)
+            Item
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ITEM_NAME)
+            Description
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DESCRIPTION)
+            Cuisine
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CUISINE)
+            Energy/kJ
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ENERGY)
+            Price/AUD
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PRICE)
+            Drink
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.IS_DRINK)
+            Vegi
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.IS_PURE_VEGI)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.HAS_BEEF)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.HAS_PORK)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.HAS_OTHERMEAT)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.HAS_CHICKEN)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.HAS_EGG)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.HAS_MILK)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.HAS_NUTS)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.HAS_VEGI)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.HAS_FRUIT)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.HAS_RICE)
+            What's Included
         </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Restaurant.RESTAURANT_NAME)
-        </td>
+
         <td>
             @Html.DisplayFor(modelItem => item.ITEM_NAME)
         </td>
@@ -96,38 +65,19 @@
             @Html.DisplayFor(modelItem => item.IS_PURE_VEGI)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.HAS_BEEF)
-        </td>
+            @(item.HAS_BEEF == "Y" ? "Beef, " : "")
+            @(item.HAS_PORK == "Y" ? "Pork, " : "")
+            @(item.HAS_CHICKEN == "Y" ? "Chicken, " : "")
+            @(item.HAS_OTHERMEAT == "Y" ? "Other Meat," : "")
+            @(item.HAS_EGG == "Y" ? "Egg, " : "")
+            @(item.HAS_MILK == "Y" ? "Mill, " : "")
+            @(item.HAS_NUTS == "Y" ? "Nuts, " : "")
+            @(item.HAS_VEGI == "Y" ? "Vegi, " : "")
+            @(item.HAS_FRUIT == "Y" ? "Fruit, " : "")
+            @(item.HAS_RICE == "Y" ? "Rice" : "")
         <td>
-            @Html.DisplayFor(modelItem => item.HAS_PORK)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.HAS_OTHERMEAT)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.HAS_CHICKEN)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.HAS_EGG)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.HAS_MILK)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.HAS_NUTS)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.HAS_VEGI)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.HAS_FRUIT)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.HAS_RICE)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ITEM_ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ITEM_ID }) |
+            @Html.ActionLink("Edit", "Edit", new { id=item.ITEM_ID }) 
+            @Html.ActionLink("Details", "Details", new { id=item.ITEM_ID }) 
             @Html.ActionLink("Delete", "Delete", new { id=item.ITEM_ID })
         </td>
     </tr>

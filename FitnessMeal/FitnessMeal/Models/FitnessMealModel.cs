@@ -20,6 +20,7 @@ namespace FitnessMeal.Models
         public virtual DbSet<Restaurant> Restaurants { get; set; }
         public virtual DbSet<USER> USERs { get; set; }
         public virtual DbSet<CUSINES> CUSINEs { get; set; }
+        public virtual DbSet<MEAL_ITEMS> MEAL_ITEMS { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -84,11 +85,7 @@ namespace FitnessMeal.Models
                 .WithRequired(e => e.FOOD_ITEM)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<FOOD_ITEM>()
-                .HasMany(e => e.MEALs)
-                .WithMany(e => e.FOOD_ITEM)
-                .Map(m => m.ToTable("MEAL_ITEMS").MapLeftKey("ITEM_ID").MapRightKey("MEAL_ID"));
-
+            
             modelBuilder.Entity<MEAL>()
                 .Property(e => e.TOTAL_PRICE)
                 .HasPrecision(10, 2);

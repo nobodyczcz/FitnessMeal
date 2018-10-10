@@ -5,6 +5,26 @@
     margin-bottom:50%;
 }
 
+#smaller-box{
+    padding:50%;
+}
+.header-photo{
+    width:100%;
+}
+
+.paddingBT{
+    padding-bottom:1%;
+    padding-top:1%;
+
+}
+
+.paddingLR {
+    padding-left: 1%;
+    padding-right: 1%;
+}
+
+
+
 .inputbox {
     height: 34px;
     padding: 6px 12px;
@@ -43,4 +63,8 @@
 
 .hidden {
     display: none;
+}
+
+.align-right{
+    float:right;
 }

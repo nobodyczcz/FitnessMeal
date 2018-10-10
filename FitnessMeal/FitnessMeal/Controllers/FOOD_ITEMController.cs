@@ -19,10 +19,12 @@ namespace FitnessMeal.Controllers
         // GET: FOOD_ITEM/RESTAURANT_ID
         public ActionResult Index(int? id)
         {
-            if (User.Identity.IsAuthenticated && db.Restaurants.Find(id).USER_ID == User.Identity.GetUserId())
+            if (id!=null && User.Identity.IsAuthenticated && db.Restaurants.Find(id).USER_ID == User.Identity.GetUserId())
             {
                 
                 var fOOD_ITEM = db.FOOD_ITEM.Where(r => r.RESTAURANT_ID == id);
+                ViewBag.RestaurantName = db.Restaurants.Find(id).RESTAURANT_NAME;
+                ViewBag.RestaurantID = db.Restaurants.Find(id).RESTAURANT_ID;
                 return View(fOOD_ITEM.ToList());
             }
             else
@@ -46,11 +48,31 @@ namespace FitnessMeal.Controllers
             return View(fOOD_ITEM);
         }
 
-        // GET: FOOD_ITEM/Create
-        public ActionResult Create()
+        // GET: FOOD_ITEM/Create/RestaurantID
+        public ActionResult Create(int? id)
         {
-            ViewBag.RESTAURANT_ID = new SelectList(db.Restaurants, "RESTAURANT_ID", "RESTAURANT_NAME");
-            return View();
+            if (id!=null && User.Identity.IsAuthenticated && db.Restaurants.Find(id).USER_ID == User.Identity.GetUserId())
+            {
+                FOOD_ITEM newFood = new FOOD_ITEM();
+                ViewBag.RestaurantName = db.Restaurants.Find(id).RESTAURANT_NAME;
+                newFood.RESTAURANT_ID = id.Value;
+                ViewBag.yn = new SelectList(
+                    new List<SelectListItem>
+                    {
+                        new SelectListItem {  Text = "No", Value ="N",Selected=true},
+                        new SelectListItem {  Text = "Yes", Value ="Y",Selected=false },
+                    }, "Value", "Text");
+                ViewBag.CUSINES = new SelectList(db.CUSINEs, "CUSINE", "CUSINE");
+
+
+                return View(newFood);
+            }
+            else
+            {
+                return HttpNotFound();
+            }
+
+            
         }
 
         // POST: FOOD_ITEM/Create
@@ -64,10 +86,17 @@ namespace FitnessMeal.Controllers
             {
                 db.FOOD_ITEM.Add(fOOD_ITEM);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index/"+fOOD_ITEM.RESTAURANT_ID);
             }
 
-            ViewBag.RESTAURANT_ID = new SelectList(db.Restaurants, "RESTAURANT_ID", "RESTAURANT_NAME", fOOD_ITEM.RESTAURANT_ID);
+            ViewBag.yn = new SelectList(
+                    new List<SelectListItem>
+                    {
+                        new SelectListItem {  Text = "Yes", Value ="Y",Selected=false },
+                        new SelectListItem {  Text = "No", Value ="N",Selected=true},
+                    }, "Value", "Text");
+            ViewBag.CUSINES = new SelectList(db.CUSINEs, "CUSINE", "CUSINE");
+
             return View(fOOD_ITEM);
         }
 
@@ -83,7 +112,13 @@ namespace FitnessMeal.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.RESTAURANT_ID = new SelectList(db.Restaurants, "RESTAURANT_ID", "RESTAURANT_NAME", fOOD_ITEM.RESTAURANT_ID);
+            ViewBag.yn = new SelectList(
+                    new List<SelectListItem>
+                    {
+                        new SelectListItem {  Text = "No", Value ="N",Selected=true},
+                        new SelectListItem {  Text = "Yes", Value ="Y",Selected=false },
+                    }, "Value", "Text");
+            ViewBag.CUSINES = new SelectList(db.CUSINEs, "CUSINE", "CUSINE");
             return View(fOOD_ITEM);
         }
 

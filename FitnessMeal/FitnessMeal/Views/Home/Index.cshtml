@@ -1,31 +1,225 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+@model FitnessMeal.Models.Search
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+
+
+<div class="row">
+    <img class="header-photo" src="~/Content/img/indexPhoto.jpg" />
+</div>
+
+    <div class="row paddingBT " id="selectLocation">
+
+        <div class=" paddingBT card card-nav-tabs text-center col-md-5">
+            <input class="inputbox" id="postCode" placeholder="Input your address "/>
+            <button class="btn-primary btn" id="enterPost">Enter</button>
+        </div>
+
+        <div class="col-md-2 text-center nc-align-center">
+            <p>
+                OR
+            </p>
+        </div>
+
+        <div class=" paddingBT card card-nav-tabs text-center nc-align-center col-md-5">
+            <button class="btn-primary btn text-center" id="getPosition"> Use Current Location</button>
+            <p class="text-danger hidden" id="errorResult"></p>
+        </div>
+
+    </div>
+    
+<div class="row hidden paddingBT" id="searchBox" >
+    <div class="card card-nav-tabs col-xs-12 col-sm-12 col-md-12">
+        <div class="row">
+            <div class="paddingBT paddingLR col-xs-6 col-sm-6 col-md-6">
+                <p id="currentLocation"></p>
+            </div>
+            <div class="col-xs-6  col-sm-6 col-md-6">
+                <button class=" pull-right btn btn-sm btn-primary text-center" id="changeLocation">Change location</button>
+            </div>
+        </div>
+
+        <div class="row">
+            @using (Ajax.BeginForm("searchRestaurant", "Search", new AjaxOptions
+            {//GetPatients is name of method in PatientController
+                InsertionMode = InsertionMode.Replace, //target element(#patientList) will be replaced
+                UpdateTargetId = "SearchResult",
+                LoadingElementId = "loader" // div with .gif loader - that is shown when data are loading
+            }, new { @class = "col-md-12" }))
+            {
+                @Html.HiddenFor(model => model.lat, new { htmlAttributes = new { @id = "searchLat" } })
+                @Html.HiddenFor(model => model.lng, new { htmlAttributes = new { @id = "searchLng" } })
+            <div class="row">
+                <div class="form-group col-md-6">
+                    @Html.EditorFor(model => model.keywords, new { htmlAttributes = new { @class = "form-control", @placeholder = "Input keywords or leave empty" } })
+                </div>
+                <div class="form-group col-md-6">
+                    <input class=" btn btn-primary" type="submit" value="Search" />
+                </div>
+            </div>
+                 
+                
+
+
+            }
+
+        </div>
+
+        <div id="loader" class=" row content-center" style="display:none">
+            Loading...<img src="~/Content/img/ajax-loader.gif" />
+        </div>
+
+
+
+
+        <div class="card-body">
+
+            <div id="SearchResult">
+
+            </div>
+
+        </div>
+        <div class="card-footer text-muted">
+            2 days ago
+        </div>
+    </div>
 </div>
 
 <div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
+        <h5>Recommandation</h5>
+        <div class="card-body row paddingLR">
+            <div class="card paddingLR col-xs-12 col-sm-12 col-md-4" >
+                <img class="card-img-top" src="..." alt="Card image cap">
+                <div class="card-body">
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+            </div>
+            <div class="card paddingLR col-xs-12 col-sm-12 col-md-4" >
+                <img class="card-img-top" src="..." alt="Card image cap">
+                <div class="card-body">
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+            </div>
+            <div class="card paddingLR col-xs-12 col-sm-12 col-md-4">
+                <img class="card-img-top" src="..." alt="Card image cap">
+                <div class="card-body">
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+            </div>
+        </div>
 </div>
+
+@section Scripts {
+    <script defer>
+        var theLat;
+        var theLng;
+        var x = $("#errorResult");
+        var currentPosition;
+        if (localStorage.getItem("theLat") != "null") {
+            $("#selectLocation").addClass("hidden");
+            $("#searchBox").removeClass("hidden");
+            theLat = localStorage.getItem("theLat");
+            theLng = localStorage.getItem("theLng");
+            setPosition(theLat, theLng, localStorage.getItem("locationName"));
+            console.log("set location hidden");
+        }
+        else {
+            
+            $("#selectLocation").removeClass("hidden");
+            $("#searchBox").addClass("hidden");
+            console.log("set location not hidden");
+        }
+        
+        function getLocation() {
+            console.log("get location");
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(usePosition, showError);
+
+            } else {
+                x.html("Geolocation is not supported by this browser.");
+            }
+        }
+
+        function usePosition(position) {
+            setPosition(position.coords.latitude, position.coords.longitude, "Your Current Position");
+        }
+
+        function setPosition(lat, lng, locationName) {
+            console.log("set location")
+            theLat = lat;
+            theLng = lng;
+            localStorage.setItem("theLat", theLat);
+            localStorage.setItem("theLng", theLng);
+            localStorage.setItem("locationName", locationName);
+            console.log(theLat + theLng);
+
+            $("#selectLocation").addClass("hidden");
+            $("#searchBox").removeClass("hidden");
+            $("#currentLocation").html("Location: " + locationName);
+
+            $("#searchLat").val(theLat);
+            $("#searchLng").val(theLng);
+        }
+
+        function showError(error) {
+            x.removeClass("hidden")
+            switch (error.code) {
+                case error.PERMISSION_DENIED:
+                    x.html("User denied the request for Geolocation.")
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    x.html("Location information is unavailable.")
+                    break;
+                case error.TIMEOUT:
+                    x.html("The request to get user location timed out.")
+                    break;
+                case error.UNKNOWN_ERROR:
+                    x.html("An unknown error occurred.")
+                    break;
+            }
+        }
+
+        function successFunction(result) {
+            if (result.status == "OK") {
+                console.log("get location" + result.results[0].formatted_address);
+
+                theLat = result.results[0].geometry.location.lat;
+                theLng = result.results[0].geometry.location.lng;
+                console.log("ready to set position");
+                setPosition(theLat, theLng, result.results[0].formatted_address);
+                console.log("set location done");
+                x.addClass("hidden");
+                
+            }
+            else {
+                console.log("error")
+            }
+        }
+
+        $("#getPosition").click(function () {
+            x.html("wait for a moment....");
+            x.removeClass("hidden");
+            getLocation()
+        });
+
+        $("#changeLocation").click(function () {
+            localStorage.setItem("theLat", null);
+            localStorage.setItem("theLng", null);
+
+            $("#selectLocation").removeClass("hidden");
+            $("#searchBox").addClass("hidden");
+        });
+
+        $("#enterPost").click(function () {
+            console.log("start search location")
+            var theUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=" + $("#postCode").val().replace(" ", "+") + "&key=AIzaSyCdniQ6G8exQ_38DM0nbEigXUDmh6mscEc";
+            console.log(theUrl);
+            
+       
+                $.ajax({
+                    url: theUrl, success: function (result) { successFunction(result) }
+                });
+        });
+    </script> 
+    }

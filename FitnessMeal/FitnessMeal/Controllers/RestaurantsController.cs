@@ -115,7 +115,7 @@ namespace FitnessMeal.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.USER_ID = new SelectList(db.USERs, "USER_ID", "USERNAME", restaurant.USER_ID);
+            ViewBag.CUSINES = new SelectList(db.CUSINEs, "CUSINE", "CUSINE");
             return View(restaurant);
         }
 
