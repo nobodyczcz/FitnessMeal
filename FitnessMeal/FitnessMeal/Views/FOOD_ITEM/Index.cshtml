@@ -7,80 +7,93 @@
 
 <h2>@ViewBag.RestaurantName</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create", new { id = ViewBag.RestaurantID })
+<p class="btn btn-primary text-white">
+    @Html.ActionLink("New Food", "Create", new { id = ViewBag.RestaurantID }, new { @class = "text-white" })
 </p>
-<table class="table">
-    <tr>
-        
-        <th>
-            Item
-        </th>
-        <th>
-            Description
-        </th>
-        <th>
-            Cuisine
-        </th>
-        <th>
-            Energy/kJ
-        </th>
-        <th>
-            Price/AUD
-        </th>
-        <th>
-            Drink
-        </th>
-        <th>
-            Vegi
-        </th>
-        <th>
-            What's Included
-        </th>
-        <th></th>
-    </tr>
+<div class="row">
+    <table class="table card card-body">
+        <thead class="text-primary">
+            <tr>
 
-@foreach (var item in Model) {
-    <tr>
+                <th>
+                    Item
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Cuisine
+                </th>
+                <th>
+                    Energy/kJ
+                </th>
+                <th>
+                    Price/AUD
+                </th>
+                <th>
+                    Drink
+                </th>
+                <th>
+                    Vegi
+                </th>
+                <th>
+                    What's Included
+                </th>
+                <th></th>
+            </tr>
+        </thead>
 
-        <td>
-            @Html.DisplayFor(modelItem => item.ITEM_NAME)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DESCRIPTION)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CUISINE)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ENERGY)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PRICE)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IS_DRINK)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IS_PURE_VEGI)
-        </td>
-        <td>
-            @(item.HAS_BEEF == "Y" ? "Beef, " : "")
-            @(item.HAS_PORK == "Y" ? "Pork, " : "")
-            @(item.HAS_CHICKEN == "Y" ? "Chicken, " : "")
-            @(item.HAS_OTHERMEAT == "Y" ? "Other Meat," : "")
-            @(item.HAS_EGG == "Y" ? "Egg, " : "")
-            @(item.HAS_MILK == "Y" ? "Mill, " : "")
-            @(item.HAS_NUTS == "Y" ? "Nuts, " : "")
-            @(item.HAS_VEGI == "Y" ? "Vegi, " : "")
-            @(item.HAS_FRUIT == "Y" ? "Fruit, " : "")
-            @(item.HAS_RICE == "Y" ? "Rice" : "")
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ITEM_ID }) 
-            @Html.ActionLink("Details", "Details", new { id=item.ITEM_ID }) 
-            @Html.ActionLink("Delete", "Delete", new { id=item.ITEM_ID })
-        </td>
-    </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.ITEM_NAME)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DESCRIPTION)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CUISINE)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ENERGY)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PRICE)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IS_DRINK)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IS_PURE_VEGI)
+                </td>
+                <td>
+                    @(item.HAS_BEEF == "Y" ? "Beef, " : "")
+                    @(item.HAS_PORK == "Y" ? "Pork, " : "")
+                    @(item.HAS_CHICKEN == "Y" ? "Chicken, " : "")
+                    @(item.HAS_OTHERMEAT == "Y" ? "Other Meat," : "")
+                    @(item.HAS_EGG == "Y" ? "Egg, " : "")
+                    @(item.HAS_MILK == "Y" ? "Mill, " : "")
+                    @(item.HAS_NUTS == "Y" ? "Nuts, " : "")
+                    @(item.HAS_VEGI == "Y" ? "Vegi, " : "")
+                    @(item.HAS_FRUIT == "Y" ? "Fruit, " : "")
+                    @(item.HAS_RICE == "Y" ? "Rice" : "")
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ITEM_ID }, new { @class = "btn btn-warning text-white", style = "padding:3px;width:65px" })
+                    @Html.ActionLink("Details", "Details", new { id = item.ITEM_ID }, new { @class = "btn btn-warning text-white", style = "padding:3px;width:65px" })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ITEM_ID }, new { @class = "btn btn-warning text-white", style = "padding:3px;width:65px" })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+
+@section Scripts{
+
+    <script>
+        $("#navBand").show();
+        $("#navBand").html("Foods Manager");
+    </script>
 }
-
-</table>

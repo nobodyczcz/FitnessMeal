@@ -5,32 +5,33 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Manage Restaurant</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
+<p class="btn btn-primary text-white">
+    @Html.ActionLink("Create New", "Create", null, new { @class = "text-white" })
 </p>
 <div class="row">
-    <table class="table">
-        <tr>
-            <th>
-                Restaurant
-            </th>
-            <th>
-                Description
-            </th>
-            <th>
-                Main Cuisine
-            </th>
-            <th>
-                Adress
-            </th>
-        </tr>
+    <table class="table card card-body">
+        <thead class="text-primary">
+            <tr>
+                <th>
+                    Restaurant
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Main Cuisine
+                </th>
+                <th>
+                    Adress
+                </th>
+            </tr>
+        </thead>
+
 
         @foreach (var item in Model)
         {
             <tr>
-                
+
                 <td>
                     @Html.DisplayFor(modelItem => item.RESTAURANT_NAME)
                 </td>
@@ -50,12 +51,19 @@
                     @Adress
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.RESTAURANT_ID }) 
-                    @Html.ActionLink("Manage", "../FOOD_ITEM/Index", new { id = item.RESTAURANT_ID }) 
-                    @Html.ActionLink("Delete", "Delete", new { id = item.RESTAURANT_ID })
+                    @Html.ActionLink("Edit", "Edit", new { id = item.RESTAURANT_ID }, new { @class = "btn btn-warning text-white", style = "padding:3px;width:65px" })
+                    @Html.ActionLink("Manage", "../FOOD_ITEM/Index", new { id = item.RESTAURANT_ID }, new { @class = "btn btn-primary text-white", style = "padding:3px;width:65px" })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.RESTAURANT_ID }, new { @class = "btn btn-danger text-white", style = "padding:3px;width:65px" })
                 </td>
             </tr>
         }
 
     </table>
 </div>
+@section Scripts {
+    <script>
+        //initialization
+        $("#navBand").show();
+        $("#navBand").html("Restaurants Manager");
+    </script>
+}

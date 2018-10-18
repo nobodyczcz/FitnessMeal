@@ -9,6 +9,12 @@
     if (theUser.User_Type == "restaurant_owner")
     {
         <li>
+            <a href="@Url.Action("Restaurant","RESERVE_PICK_UP")">
+                <i class="nc-icon nc-settings"></i>
+                <p>Order Dashboard</p>
+            </a>
+        </li>
+        <li>
             <a href="@Url.Action("Index", "Restaurants")">
                 <i class="nc-icon nc-bank"></i>
                 <p>Manage Restaurant</p>
@@ -18,11 +24,20 @@
     else
     {
         <li>
+            <a href="@Url.Action("Index","RESERVE_PICK_UP")">
+                <i class="nc-icon nc-cart-simple"></i>
+                <p>My orders</p>
+            </a>
+        </li>
+
+        <li>
             <a href="@Url.Action("Index", "USERs")">
-                <i class="nc-icon nc-bank"></i>
+                <i class="nc-icon nc-single-02"></i>
                 <p>Manage Profile</p>
             </a>
         </li>
+
+
     }
 
 }

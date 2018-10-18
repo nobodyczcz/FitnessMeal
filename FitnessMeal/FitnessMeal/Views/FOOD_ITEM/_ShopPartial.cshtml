@@ -1,0 +1,257 @@
+﻿@model IEnumerable<FitnessMeal.Models.FOOD_ITEM>
+<script>
+    var currentRestaurant = @ViewBag.restaurantID;
+    var itemList = {};
+    var totalPrice;
+    var totalEnergy;
+    function addItem(itemID) {
+        console.log(itemID);
+        console.log(itemList);
+        var item = itemList[itemID];
+        console.log(item)
+        var restaurantID = item.restaurant;
+        if (cart[restaurantID]) {
+            cart[restaurantID].push(item)
+        }
+        else {
+            cart[restaurantID] = [];
+            cart[restaurantID].push(item)
+        }
+        refreshCart();
+    }
+    function deleteItem(itemID) {
+        var item = itemList[itemID];
+        var restaurantID = item.restaurant;
+        for (var i in cart[restaurantID]) {
+            if (cart[restaurantID][i].itemID == itemID) {
+                delete cart[restaurantID][i]
+            }
+        }
+        
+        refreshCart()
+    }
+    function refreshCart() {
+        var theContent = '<div style="min-height:150px"><table class="table" ><thead class=" text-primary"><tr><th>Item</th><th>Price</th><th>Energy</th><th></th></tr></thead>';
+        totalPrice = 0;
+        totalEnergy = 0;
+        if (cart[currentRestaurant]) {
+
+            cart[currentRestaurant].forEach(function (i) {
+                theContent = theContent + "<tr><td>" + i.itemName + "</td><td>" + i.price + "</td><td>" + i.energy + '</td><td><button class="btn btn-sm btn-danger btn-round " style="padding:50%" value="' + i.itemID + '" onclick="deleteItem(this.value)">-</button></td></tr>';
+                totalPrice += i.price;
+                totalEnergy += i.energy;
+            });
+
+        }
+        else {
+
+        }
+        theContent = theContent + '</table></div><div class="text-warning">Total Energy: ' + totalEnergy + '</div><div class="text-primary">Total Price: ' + totalPrice + '<\div>'
+        console.log(theContent);
+        $("#cartContent").html(theContent);
+    }
+</script>
+
+<div class="row">
+    <div class="col-12 col-sm-8 col-md-8 col-lg-8">
+
+
+
+        @foreach (var item in Model)
+        {
+            <div class="card card-nav-tabs" style="width:100%">
+                <div class="card-body">
+                    <table style="width:100%">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <h5 style="margin-bottom:0"> @Html.DisplayFor(modelItem => item.ITEM_NAME)</h5>
+                                    <br />
+                                    @Html.DisplayFor(modelItem => item.CUISINE)
+                                    <br />
+                                    @Html.DisplayFor(modelItem => item.DESCRIPTION)
+
+                                </td>
+
+                                <td>
+                                    <a>@(item.IS_DRINK == "Y" ? "Drink " : "")</a>
+                                    <br />
+                                    <a>@(item.IS_PURE_VEGI == "Y" ? "Vegi " : "")</a>
+                                </td>
+                                <td>
+                                    Contains:
+                                    <br />
+                                    @(item.HAS_BEEF == "Y" ? "Beef " : "")
+                                    @(item.HAS_PORK == "Y" ? "Pork " : "")
+                                    @(item.HAS_CHICKEN == "Y" ? "Chicken " : "")
+                                    @(item.HAS_EGG == "Y" ? "Egg, " : "")
+                                    @(item.HAS_MILK == "Y" ? "Mill, " : "")
+                                    @(item.HAS_NUTS == "Y" ? "Nuts, " : "")
+                                    @(item.HAS_VEGI == "Y" ? "Vegi, " : "")
+                                    @(item.HAS_FRUIT == "Y" ? "Fruit, " : "")
+                                    @(item.HAS_RICE == "Y" ? "Rice" : "")
+                                    @(item.HAS_OTHERMEAT == "Y" ? ", Other Meat" : "")
+                                </td>
+                                <td style="min-width:90px">
+                                    Energy:
+                                    <br />
+                                    @Html.DisplayFor(modelItem => item.ENERGY) kJ
+                                    <br />
+                                    Price:
+                                    <br />
+                                    @Html.DisplayFor(modelItem => item.PRICE) AUD
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary pull-right" type="submit" value="@item.ITEM_ID" id="@item.ITEM_ID" onclick="addItem(this.value)">Order</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+            <script>
+                        itemList[@item.ITEM_ID] = {
+                            itemID:@item.ITEM_ID,
+                            itemName: "@item.ITEM_NAME",
+                            restaurant: @item.RESTAURANT_ID,
+                            energy:@item.ENERGY,
+                            price:@item.PRICE
+                        };
+            </script>
+        }
+
+
+
+
+    </div>
+
+    <div class="col-12 col-sm-4 col-md-4 col-lg-4">
+        @Html.AntiForgeryToken()
+        <div class=" card card-nav-tabs">
+            <div class="card-header text-primary text-center">
+                <button class="btn btn-round btn-sm btn-danger pull-right" style="width:100%;margin-top:0" onclick="backToList()">Back to Result</button>
+                <br />
+
+                <strong style="font-size:20px;">@ViewBag.RestaurantName</strong>
+                <br />
+                <a class="text-warning">Open: @ViewBag.openTime  </a>
+                <a class="text-warning">Close: @ViewBag.closeTime</a>
+
+            </div>
+            <div class="card-body" id="cartContent">
+
+
+            </div>
+            <div class="card-body">
+                <div class="text-center text-dark">
+                    Choose a Pick Up Time
+
+                </div>
+                <div class="input-group date" id="datetimepicker13" data-target-input="nearest">
+                    <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker13" />
+                    <div class="input-group-append" data-target="#datetimepicker13" data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="fa fa-clock-o"></i></div>
+                    </div>
+                </div>
+
+                <div>
+                    <button class="btn btn-block btn-primary" id="placeButton" value="@ViewBag.RestaurantID" onclick="placeOrder(this.value)">Place Pick Up Order</button>
+                </div>
+                <div class="text-danger" id="orderErrorResult">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<script>
+
+
+    refreshCart();
+    var currentTime = moment();
+    var openTime = moment("@ViewBag.openTime","HH:mm:ss");
+    var closeTime = moment("@ViewBag.closeTime","HH:mm:ss");
+    var minTime = openTime > currentTime ? openTime : currentTime;
+    if (currentTime < openTime) {
+        $("#orderErrorResult").html('<p class="text-danger">The restaurant not open yet. You only can choose a pick up time after open time. </p>')
+
+    }
+
+    if (currentTime.add(20, "minutes") > closeTime) {
+        $('#datetimepicker13').prop('disabled', true)
+        $('#placeButton').prop('disabled', true)
+        $("#orderErrorResult").html('<p class="text-danger">Sorry, the restaurant will close soon and no longer accept orders</p>')
+    }
+    else {
+        $(function () {
+            $('#datetimepicker13').datetimepicker({
+                format: 'HH:mm',
+                minDate: minTime.add(15, "minutes"),
+                maxDate: closeTime
+            });
+        });
+    }
+
+    var orderSuccessFunction = function (result) {
+        if (result.result == "success") {
+            $("#orderErrorResult").html('<p class="text-primary">Success</p>');
+
+        }
+        else {
+            $("#orderErrorResult").html('<p class="text-danger">Failed</p>')
+
+        }
+    }
+    var orderErrorFucntion = function (result) {
+        $("#orderErrorResult").html("error")
+    }
+
+    //place order
+    function placeOrder(restID) {
+        var theUrl ="/RESERVE_PICK_UP/Create"
+        var items = cart[restID];
+        if (!items) {
+            $("#orderErrorResult").html('<p class="text-danger">You do not have any item in the cart</p>')
+        }
+        else {
+            var itemIDs = [];
+            items.forEach(function (i) {
+                itemIDs.push(i.itemID)
+            });
+            var data = {};
+            data["itemIDs"] = itemIDs;
+            data["pickTime"] = $("#datetimepicker13").data("datetimepicker").date().format("DD/MM/YYYY HH:mm:ss");
+            data["orderTime"] = moment().format("DD/MM/YYYY HH:mm:ss");
+            data["restaurantID"] = currentRestaurant;
+            data["totalPrice"] = totalPrice;
+            data["totalEnergy"] = totalEnergy;
+            var jsonData = JSON.stringify(data);
+            console.log(jsonData)
+            var headers = { __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val() };
+
+            $.ajax({
+                headers: headers,
+                type: 'POST',
+                url: theUrl,
+                data: {
+                    "json": jsonData,
+                    "__RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val()
+                },
+                success: orderSuccessFunction,
+                error:orderErrorFucntion
+
+            });
+        }
+        
+    }
+    
+
+
+</script>
+
+
+

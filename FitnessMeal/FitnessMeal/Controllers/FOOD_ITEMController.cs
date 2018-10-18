@@ -23,14 +23,30 @@ namespace FitnessMeal.Controllers
             {
                 
                 var fOOD_ITEM = db.FOOD_ITEM.Where(r => r.RESTAURANT_ID == id);
-                ViewBag.RestaurantName = db.Restaurants.Find(id).RESTAURANT_NAME;
-                ViewBag.RestaurantID = db.Restaurants.Find(id).RESTAURANT_ID;
+                var theRestaurant = db.Restaurants.Find(id);
+                ViewBag.RestaurantName = theRestaurant.RESTAURANT_NAME;
+                ViewBag.RestaurantID = theRestaurant.RESTAURANT_ID;
                 return View(fOOD_ITEM.ToList());
             }
             else
             {
                 return HttpNotFound();
             }
+        }
+
+        // GET: FOOD_ITEM/Shop/RESTAURANT_ID
+        public ActionResult Shop(int id)
+        {
+            
+
+                var fOOD_ITEM = db.FOOD_ITEM.Where(r => r.RESTAURANT_ID == id);
+            var theRestaurant = db.Restaurants.Find(id);
+                ViewBag.RestaurantName = theRestaurant.RESTAURANT_NAME;
+                ViewBag.RestaurantID = theRestaurant.RESTAURANT_ID;
+            ViewBag.openTime = theRestaurant.OPENTIME;
+            ViewBag.closeTime =  theRestaurant.CLOSETIME;
+            return PartialView("_ShopPartial",fOOD_ITEM.ToList());
+           
         }
 
         // GET: FOOD_ITEM/Details/5

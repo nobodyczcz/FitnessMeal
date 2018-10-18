@@ -124,10 +124,11 @@ namespace FitnessMeal.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "RESTAURANT_ID,RESTAURANT_NAME,DESCRIPTION,Main_CUSINE,USER_ID,ADRESS_FIRST_LINE,STREET_NO,STREET_RD,SURBURB,POSTCODE,STATE")] Restaurant restaurant)
+        public ActionResult Edit(Restaurant restaurant)
         {
             if (ModelState.IsValid)
             {
+                Debug.WriteLine("Latitude: "+restaurant.LATITUDE);
                 db.Entry(restaurant).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

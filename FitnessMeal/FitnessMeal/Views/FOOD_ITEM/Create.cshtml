@@ -13,13 +13,13 @@
     @Html.AntiForgeryToken()
     
 <div class="form-horizontal">
-    <h4>FOOD_ITEM</h4>
-    <hr />
+
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.EditorFor(model => model.RESTAURANT_ID, new { htmlAttributes = new { @class = "hidden" } })
     @Html.ValidationMessageFor(model => model.RESTAURANT_ID, "", new { @class = "text-danger" })
 
-    <div class="row">
+    <div class="card card-body">
+        <div class="row">
         <div class="col-md-6">
             <div class="row">
                 <div class="form-group col-md-12">
@@ -67,96 +67,96 @@
 
         <div class="col-md-6">
             <div class="row">
-                <div class="form-group col-md-3 col-sm-6 col-xs-6">
-                    @Html.LabelFor(model => model.IS_DRINK, htmlAttributes: new { @class = "control-label col-md-3 col-sm-6 col-xs-6" })
+                <div class="form-group col-md-3 col-sm-4 col-6">
+                    @Html.LabelFor(model => model.IS_DRINK, htmlAttributes: new { @class = "control-label " })
                     <div>
                         @Html.DropDownListFor(model => model.IS_DRINK, ViewBag.yn as SelectList, new { @class = "inputbox" })
                         @Html.ValidationMessageFor(model => model.IS_DRINK, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
-                <div class="form-group col-md-3 col-sm-6 col-xs-6">
-                    @Html.LabelFor(model => model.IS_PURE_VEGI, htmlAttributes: new { @class = "control-label col-md-3 col-sm-6 col-xs-6" })
+                <div class="form-group col-md-3 col-sm-4 col-6">
+                    @Html.LabelFor(model => model.IS_PURE_VEGI, htmlAttributes: new { @class = "control-label " })
                     <div>
                         @Html.DropDownListFor(model => model.IS_PURE_VEGI, ViewBag.yn as SelectList, new { @class = "inputbox" })
                         @Html.ValidationMessageFor(model => model.IS_PURE_VEGI, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
-                <div class="form-group col-md-3 col-sm-6 col-xs-6">
-                    @Html.LabelFor(model => model.HAS_BEEF, htmlAttributes: new { @class = "control-label col-md-3 col-sm-6 col-xs-6" })
+                <div class="form-group col-md-3 col-sm-4 col-6">
+                    @Html.LabelFor(model => model.HAS_BEEF, htmlAttributes: new { @class = "control-label " })
                     <div>
                         @Html.DropDownListFor(model => model.HAS_BEEF, ViewBag.yn as SelectList, new { @class = "inputbox" })
                         @Html.ValidationMessageFor(model => model.HAS_BEEF, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
-                <div class="form-group col-md-3 col-sm-6 col-xs-6">
-                    @Html.LabelFor(model => model.HAS_PORK, htmlAttributes: new { @class = "control-label col-md-3 col-sm-6 col-xs-6" })
+                <div class="form-group col-md-3 col-sm-4 col-6">
+                    @Html.LabelFor(model => model.HAS_PORK, htmlAttributes: new { @class = "control-label " })
                     <div>
                         @Html.DropDownListFor(model => model.HAS_PORK, ViewBag.yn as SelectList, new { @class = "inputbox" })
                         @Html.ValidationMessageFor(model => model.HAS_PORK, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
-                <div class="form-group col-md-3 col-sm-6 col-xs-6">
-                    @Html.LabelFor(model => model.HAS_OTHERMEAT, htmlAttributes: new { @class = "control-label col-md-3 col-sm-6 col-xs-6" })
+                <div class="form-group col-md-3 col-sm-4 col-6">
+                    @Html.LabelFor(model => model.HAS_OTHERMEAT, htmlAttributes: new { @class = "control-label " })
                     <div>
                         @Html.DropDownListFor(model => model.HAS_OTHERMEAT, ViewBag.yn as SelectList, new { @class = "inputbox" })
                         @Html.ValidationMessageFor(model => model.HAS_OTHERMEAT, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
-                <div class="form-group col-md-3 col-sm-6 col-xs-6">
-                    @Html.LabelFor(model => model.HAS_CHICKEN, htmlAttributes: new { @class = "control-label col-md-3 col-sm-6 col-xs-6" })
+                <div class="form-group col-md-3 col-sm-4 col-6">
+                    @Html.LabelFor(model => model.HAS_CHICKEN, htmlAttributes: new { @class = "control-label " })
                     <div>
                         @Html.DropDownListFor(model => model.HAS_CHICKEN, ViewBag.yn as SelectList, new { @class = "inputbox" })
                         @Html.ValidationMessageFor(model => model.HAS_CHICKEN, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
-                <div class="form-group col-md-3 col-sm-6 col-xs-6">
-                    @Html.LabelFor(model => model.HAS_EGG, htmlAttributes: new { @class = "control-label col-md-3 col-sm-6 col-xs-6" })
+                <div class="form-group col-md-3 col-sm-4 col-6">
+                    @Html.LabelFor(model => model.HAS_EGG, htmlAttributes: new { @class = "control-label " })
                     <div>
                         @Html.DropDownListFor(model => model.HAS_EGG, ViewBag.yn as SelectList, new { @class = "inputbox" })
                         @Html.ValidationMessageFor(model => model.HAS_EGG, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
-                <div class="form-group col-md-3 col-sm-6 col-xs-6">
-                    @Html.LabelFor(model => model.HAS_MILK, htmlAttributes: new { @class = "control-label col-md-3 col-sm-6 col-xs-6" })
+                <div class="form-group col-md-3 col-sm-4 col-6">
+                    @Html.LabelFor(model => model.HAS_MILK, htmlAttributes: new { @class = "control-label " })
                     <div>
                         @Html.DropDownListFor(model => model.HAS_MILK, ViewBag.yn as SelectList, new { @class = "inputbox" })
                         @Html.ValidationMessageFor(model => model.HAS_MILK, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
-                <div class="form-group col-md-3 col-sm-6 col-xs-6">
-                    @Html.LabelFor(model => model.HAS_NUTS, htmlAttributes: new { @class = "control-label col-md-3 col-sm-6 col-xs-6" })
+                <div class="form-group col-md-3 col-sm-4 col-6">
+                    @Html.LabelFor(model => model.HAS_NUTS, htmlAttributes: new { @class = "control-label " })
                     <div>
                         @Html.DropDownListFor(model => model.HAS_NUTS, ViewBag.yn as SelectList, new { @class = "inputbox" })
                         @Html.ValidationMessageFor(model => model.HAS_NUTS, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
-                <div class="form-group col-md-3 col-sm-6 col-xs-6">
-                    @Html.LabelFor(model => model.HAS_VEGI, htmlAttributes: new { @class = "control-label col-md-3 col-sm-6 col-xs-6" })
+                <div class="form-group col-md-3 col-sm-4 col-6">
+                    @Html.LabelFor(model => model.HAS_VEGI, htmlAttributes: new { @class = "control-label " })
                     <div>
                         @Html.DropDownListFor(model => model.HAS_VEGI, ViewBag.yn as SelectList, new { @class = "inputbox" })
                         @Html.ValidationMessageFor(model => model.HAS_VEGI, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
-                <div class="form-group col-md-3 col-sm-6 col-xs-6">
-                    @Html.LabelFor(model => model.HAS_FRUIT, htmlAttributes: new { @class = "control-label col-md-3 col-sm-6 col-xs-6" })
+                <div class="form-group col-md-3 col-sm-4 col-6">
+                    @Html.LabelFor(model => model.HAS_FRUIT, htmlAttributes: new { @class = "control-label " })
                     <div>
                         @Html.DropDownListFor(model => model.HAS_FRUIT, ViewBag.yn as SelectList, new { @class = "inputbox" })
                         @Html.ValidationMessageFor(model => model.HAS_FRUIT, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
-                <div class="form-group col-md-3 col-sm-6 col-xs-6">
-                    @Html.LabelFor(model => model.HAS_RICE, htmlAttributes: new { @class = "control-label col-md-3 col-sm-6 col-xs-6" })
+                <div class="form-group col-md-3 col-sm-4 col-6">
+                    @Html.LabelFor(model => model.HAS_RICE, htmlAttributes: new { @class = "control-label " })
                     <div>
                         @Html.DropDownListFor(model => model.HAS_RICE, ViewBag.yn as SelectList, new { @class = "inputbox" })
                         @Html.ValidationMessageFor(model => model.HAS_RICE, "", new { @class = "text-danger" })
@@ -166,19 +166,25 @@
         </div>
 
     </div>
+    </div>
+    
 
     <div class="form-group">
         <div class="col-md-offset-2 ">
-            <input type="submit" value="Create" class="btn btn-default" />
+            <input class="btn btn-primary pull-right" type="submit" value="Create"  />
         </div>
     </div>
 </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index/"+Model.RESTAURANT_ID)
+    @Html.ActionLink("Back to List", "Index/"+Model.RESTAURANT_ID,null,new {@class="btn btn-warning text-white" })
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $("#navBand").show();
+        $("#navBand").html("New Food");
+    </script>
 }

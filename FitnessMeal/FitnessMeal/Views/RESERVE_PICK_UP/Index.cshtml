@@ -1,0 +1,77 @@
+﻿@model IEnumerable<FitnessMeal.Models.RESERVE_PICK_UP>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="card card-body">
+    <table class="table">
+        <thead class="text-primary">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Restaurant.RESTAURANT_NAME)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ORDER_TIME)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PICK_UP_TIME)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ORDER_PRICE)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.TOTAL_ENERGY)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.STATE)
+                </th>
+
+                <th></th>
+            </tr>
+        </thead>
+        
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Restaurant.RESTAURANT_NAME)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.ORDER_TIME)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PICK_UP_TIME)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ORDER_PRICE)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TOTAL_ENERGY)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.STATE)
+                </td>
+
+                <td>
+                    @if (item.STATE == "waiting")
+                    {
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ORDER_ID }, new { @class = "btn btn-warning" })
+                    }
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+
+@section Scripts{
+
+    <script>
+        $("#navBand").show();
+        $("#navBand").html("My Orders");
+    </script>
+}

@@ -10,7 +10,6 @@ namespace FitnessMeal.Models
     {
         [Key]
         [Column(Order = 0)]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ORDER_ID { get; set; }
 
         [Key]

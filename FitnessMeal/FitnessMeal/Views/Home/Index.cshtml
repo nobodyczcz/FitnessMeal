@@ -1,136 +1,242 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-@model FitnessMeal.Models.Search
 
 
 
 <div class="row">
-    <img class="header-photo" src="~/Content/img/indexPhoto.jpg" />
+    <div class=" card card-nav-tabs " style="width:100%">
+        <picture>
+            <source media="(max-width: 479px)" srcset="/Content/img/indexPhoto-480w.jpg">
+            <source media="(min-width:480px) and (max-width: 799px)" srcset="/Content/img/indexPhoto-800w.jpg">
+            <source media="(min-width: 800px)" srcset="/Content/img/indexPhoto-max.jpg">
+            <img src="/Content/img/indexPhoto-max.jpg" alt="header photo">
+        </picture>
+    </div>
 </div>
 
-    <div class="row paddingBT " id="selectLocation">
+<div class="row paddingBT" id="selectLocation">
+    <div class=" card card-nav-tabs " style="width:100%">
+        <div class="row" style="padding:10px">
 
-        <div class=" paddingBT card card-nav-tabs text-center col-md-5">
-            <input class="inputbox" id="postCode" placeholder="Input your address "/>
-            <button class="btn-primary btn" id="enterPost">Enter</button>
+            <div class=" paddingBT text-center col-md-5">
+                <input class="inputbox" id="postCode" placeholder="Input your address " />
+                <button class="btn-primary btn" id="enterPost" style="width:100%">Enter</button>
+            </div>
+
+            <div class="col-md-2 text-center align-items-center ">
+                <p>
+                    OR
+                </p>
+            </div>
+
+
+            <div class=" paddingBT col-md-5 align-items-end">
+                <div class="text-center" style="height:37%">
+                    <p class="text-danger hidden" id="errorResult"></p>
+                </div>
+                <div style="width:100%;height:63%">
+                    <div>
+                        <button class="btn-primary btn text-center" id="getPosition" style="width:100%"> Use Current Location</button>
+                    </div>
+                </div>
+            </div>
+
         </div>
-
-        <div class="col-md-2 text-center nc-align-center">
-            <p>
-                OR
-            </p>
-        </div>
-
-        <div class=" paddingBT card card-nav-tabs text-center nc-align-center col-md-5">
-            <button class="btn-primary btn text-center" id="getPosition"> Use Current Location</button>
-            <p class="text-danger hidden" id="errorResult"></p>
-        </div>
-
     </div>
-    
-<div class="row hidden paddingBT" id="searchBox" >
-    <div class="card card-nav-tabs col-xs-12 col-sm-12 col-md-12">
-        <div class="row">
-            <div class="paddingBT paddingLR col-xs-6 col-sm-6 col-md-6">
-                <p id="currentLocation"></p>
-            </div>
-            <div class="col-xs-6  col-sm-6 col-md-6">
-                <button class=" pull-right btn btn-sm btn-primary text-center" id="changeLocation">Change location</button>
-            </div>
-        </div>
 
-        <div class="row">
-            @using (Ajax.BeginForm("searchRestaurant", "Search", new AjaxOptions
-            {//GetPatients is name of method in PatientController
-                InsertionMode = InsertionMode.Replace, //target element(#patientList) will be replaced
-                UpdateTargetId = "SearchResult",
-                LoadingElementId = "loader" // div with .gif loader - that is shown when data are loading
-            }, new { @class = "col-md-12" }))
-            {
-                @Html.HiddenFor(model => model.lat, new { htmlAttributes = new { @id = "searchLat" } })
-                @Html.HiddenFor(model => model.lng, new { htmlAttributes = new { @id = "searchLng" } })
-            <div class="row">
-                <div class="form-group col-md-6">
-                    @Html.EditorFor(model => model.keywords, new { htmlAttributes = new { @class = "form-control", @placeholder = "Input keywords or leave empty" } })
+</div>
+
+
+<div class="row hidden paddingBT" id="searchBox">
+    <div class="card card-nav-tabs col-12 col-sm-12 col-md-12">
+        <div class="card-body">
+            <div class="row align-items-center">
+                @using (Html.BeginForm("searchRestaurant", "Search", null, FormMethod.Post, new { @class = "align-items-center col-md-8 col-12 col-sm-7 col-lg-8 pull-right", id = "searchForm" }))
+                {
+                    @Html.Hidden("theLat")
+                    @Html.Hidden("theLng")
+                    <div class="row align-items-center">
+                        <div class="align-items-center col-lg-2 col-md-2 col-sm-2 col-2 paddingBT">
+                            <a class="pull-right" style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Range:</a>
+                        </div>
+                        <div class=" align-items-center justify-content-end paddingBT col-lg-2 col-md-3 col-sm-3 col-9">
+                            @Html.DropDownList("theRange", new SelectList (
+                           new List<SelectListItem> {
+                               new SelectListItem { Selected = true, Text="1 Km", Value = "1"},
+                               new SelectListItem { Selected = true, Text="3 Km", Value = "3"},
+                               new SelectListItem { Selected = true, Text="5 Km", Value = "5"},
+                               new SelectListItem { Selected = true, Text="10 Km", Value = "10"}
+                           },"Value","Text",1), new { @class = "inputbox" })
+                        </div>
+                        <div class="align-items-center paddingBT col-lg-8 col-md-7 col-sm-7 col-12">
+                            @Html.Editor("keywords", new { htmlAttributes = new { @class = "align-self-center inputbox", @placeholder = "Input keywords or leave empty" } })
+                        </div>
+                    </div>
+                }
+                <div class="col-md-4 col-12 col-sm-5  col-lg-4">
+                    <div class="row">
+                        <div class="col-6 col-sm-6 col-md-6 col-lg-6">
+                            <button class=" btn btn-primary " id="theSubmit">Search</button>
+                        </div>
+                        <div class="col-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="btn-group btn-group-toggle pull-right" data-toggle="buttons" id="viewToggle">
+                                <label class="btn btn-round btn-warning active" style="padding:11px">
+                                    <input type="radio" name="listview" id="listview" onchange="showResult()" autocomplete="off" checked> List
+                                </label>
+                                <label class="btn btn-round btn-warning" style="padding:11px">
+                                    <input type="radio" name="mapview" id="mapview" onchange="showMap()" autocomplete="off"> Map
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
-                <div class="form-group col-md-6">
-                    <input class=" btn btn-primary" type="submit" value="Search" />
-                </div>
             </div>
-                 
-                
-
-
-            }
-
         </div>
+    </div>
+</div>
 
-        <div id="loader" class=" row content-center" style="display:none">
-            Loading...<img src="~/Content/img/ajax-loader.gif" />
-        </div>
-
-
-
-
+<div class="row hidden" id="loader">
+    <div class="card card-nav-tabs" style="width:100%">
         <div class="card-body">
 
-            <div id="SearchResult">
-
+            <div class="align-items-center justify-content-center">
+                <img style="width:5%" src="~/Content/img/ajax-loader.gif" />
             </div>
 
         </div>
-        <div class="card-footer text-muted">
-            2 days ago
-        </div>
+
     </div>
 </div>
 
+<div class="row" id="SearchResult">
+
+</div>
+
+<div class="row hidden" id="theMap" style="height:400px">
+    <div class="mapIndex" style="height:100%" id="map"></div>
+
+</div>
+
+<div class="row hidden" id="restaurant">
+
+</div>
+
 <div class="row">
-        <h5>Recommandation</h5>
-        <div class="card-body row paddingLR">
-            <div class="card paddingLR col-xs-12 col-sm-12 col-md-4" >
-                <img class="card-img-top" src="..." alt="Card image cap">
+    <h5>Recommandation</h5>
+
+    <div class="row">
+        <div class="paddingLR col-12 col-sm-4 col-md-4">
+            <div class="card">
+                <img class="recPhoto card-img-top" src="~/Content/img/brunch.jpg" alt="Card image cap">
                 <div class="card-body">
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-            </div>
-            <div class="card paddingLR col-xs-12 col-sm-12 col-md-4" >
-                <img class="card-img-top" src="..." alt="Card image cap">
-                <div class="card-body">
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-            </div>
-            <div class="card paddingLR col-xs-12 col-sm-12 col-md-4">
-                <img class="card-img-top" src="..." alt="Card image cap">
-                <div class="card-body">
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <h5>Third Restaurant</h5>
                 </div>
             </div>
         </div>
+
+        <div class="paddingLR col-12 col-sm-4 col-md-4">
+            <div class="card">
+                <img class="recPhoto card-img-top" src="~/Content/img/jucie.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <h5>Second Restaurant</h5>
+                </div>
+            </div>
+        </div>
+
+        <div class="paddingLR col-12 col-sm-4 col-md-4">
+            <div class="card">
+                <img class="recPhoto card-img-top" src="~/Content/img/salad.jpg" alt="Card image cap">
+                <div class="card-body text-center">
+                    <h5>First Restaurant</h5>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
 </div>
 
 @section Scripts {
+
+    <script async
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCdniQ6G8exQ_38DM0nbEigXUDmh6mscEc&callback=initMap">
+
+    </script>
     <script defer>
+        //Shopping cart and others initialization
+        var cart = {};
+        //maps initialization
+        var markerList = [];
+        var theMap;
+        var selfPositionMarker;
+        function initMap() {
+            theMap = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: - 37.8136276, lng: 144.9630576 },
+                zoom: 13,
+                streetViewControl: false,
+            });
+            var geocoder = new google.maps.Geocoder();
+
+            var selfIcon = {
+                path: 'M17.659,9.597h-1.224c-0.199-3.235-2.797-5.833-6.032-6.033V2.341c0-0.222-0.182-0.403-0.403-0.403S9.597,2.119,9.597,2.341v1.223c-3.235,0.2-5.833,2.798-6.033,6.033H2.341c-0.222,0-0.403,0.182-0.403,0.403s0.182,0.403,0.403,0.403h1.223c0.2,3.235,2.798,5.833,6.033,6.032v1.224c0,0.222,0.182,0.403,0.403,0.403s0.403-0.182,0.403-0.403v-1.224c3.235-0.199,5.833-2.797,6.032-6.032h1.224c0.222,0,0.403-0.182,0.403-0.403S17.881,9.597,17.659,9.597 M14.435,10.403h1.193c-0.198,2.791-2.434,5.026-5.225,5.225v-1.193c0-0.222-0.182-0.403-0.403-0.403s-0.403,0.182-0.403,0.403v1.193c-2.792-0.198-5.027-2.434-5.224-5.225h1.193c0.222,0,0.403-0.182,0.403-0.403S5.787,9.597,5.565,9.597H4.373C4.57,6.805,6.805,4.57,9.597,4.373v1.193c0,0.222,0.182,0.403,0.403,0.403s0.403-0.182,0.403-0.403V4.373c2.791,0.197,5.026,2.433,5.225,5.224h-1.193c-0.222,0-0.403,0.182-0.403,0.403S14.213,10.403,14.435,10.403',
+                fillColor: 'green',
+                fillOpacity: 1,
+                scale: 2,
+                strokeColor: 'green',
+                strokeWeight: 0,
+                anchor: new google.maps.Point(10, 10),
+                labelOrigin: new google.maps.Point(10, 10),
+            };
+
+            selfPositionMarker = new google.maps.Marker({
+                position: { lat: theLat, lng: theLng },
+                map: theMap,
+                icon: selfIcon,
+                title: 'You are here',
+                label: {
+                    text: "I",
+                    color: 'green',
+                    fontWeight: 'bold'
+                }
+            });
+
+        }
+
+        function clearAllMarkers() {
+            if (markerList[0]) {
+                markerList.forEach(function (mark) {
+                    mark.setMap(null);
+                })
+
+            }
+            markerList = [];
+        }
+
+        //About location setting and google geocoding api
         var theLat;
         var theLng;
         var x = $("#errorResult");
         var currentPosition;
-        if (localStorage.getItem("theLat") != "null") {
+        if (localStorage.getItem("theLat") != "null" && localStorage.getItem("theLat") != "NaN" && localStorage.getItem("theLat") != null) {
             $("#selectLocation").addClass("hidden");
             $("#searchBox").removeClass("hidden");
-            theLat = localStorage.getItem("theLat");
-            theLng = localStorage.getItem("theLng");
+            theLat = parseFloat(localStorage.getItem("theLat"));
+            theLng = parseFloat(localStorage.getItem("theLng"));
             setPosition(theLat, theLng, localStorage.getItem("locationName"));
             console.log("set location hidden");
         }
         else {
-            
+
             $("#selectLocation").removeClass("hidden");
             $("#searchBox").addClass("hidden");
             console.log("set location not hidden");
         }
-        
+
+
+
         function getLocation() {
             console.log("get location");
             if (navigator.geolocation) {
@@ -156,12 +262,31 @@
 
             $("#selectLocation").addClass("hidden");
             $("#searchBox").removeClass("hidden");
-            $("#currentLocation").html("Location: " + locationName);
+            $("#currentLocation").html(locationName);
 
-            $("#searchLat").val(theLat);
-            $("#searchLng").val(theLng);
+            $("#theLat").val(theLat);
+            $("#theLng").val(theLng);
+
+            setMapCenter()
+
+
+
+
         }
 
+        function setMapCenter() {
+            try {
+                theMap.setCenter({ lat: theLat, lng: theLng });
+                theMap.setZoom(13);
+                selfPositionMarker.setPosition({ lat: theLat, lng: theLng });
+
+            }
+            catch (exception) {
+                console.log(exception);
+            };
+        }
+
+        //error for get location
         function showError(error) {
             x.removeClass("hidden")
             switch (error.code) {
@@ -180,22 +305,26 @@
             }
         }
 
+        //success function after Geocoding
         function successFunction(result) {
             if (result.status == "OK") {
                 console.log("get location" + result.results[0].formatted_address);
 
                 theLat = result.results[0].geometry.location.lat;
                 theLng = result.results[0].geometry.location.lng;
-                console.log("ready to set position");
+
+                console.log("ready to set position" + theLat + " " + theLng);
                 setPosition(theLat, theLng, result.results[0].formatted_address);
                 console.log("set location done");
                 x.addClass("hidden");
-                
+
             }
             else {
                 console.log("error")
             }
         }
+
+        //click events
 
         $("#getPosition").click(function () {
             x.html("wait for a moment....");
@@ -215,11 +344,102 @@
             console.log("start search location")
             var theUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=" + $("#postCode").val().replace(" ", "+") + "&key=AIzaSyCdniQ6G8exQ_38DM0nbEigXUDmh6mscEc";
             console.log(theUrl);
-            
-       
-                $.ajax({
-                    url: theUrl, success: function (result) { successFunction(result) }
-                });
+
+            $.ajax({
+                url: theUrl, success: function (result) { successFunction(result) }
+            });
         });
-    </script> 
-    }
+
+
+
+
+
+
+        //Switch veiw
+        var currentView = 0;
+        var orderView = 0;
+
+        function showResult() {
+            $("#SearchResult").show();
+            $("#theMap").hide();
+            $("#restaurant").hide();
+            currentView = 0;
+        }
+
+        function showMap() {
+            $("#SearchResult").hide();
+            $("#theMap").show();
+            $("#restaurant").hide();
+            currentView = 1;
+            setMapCenter()
+        }
+
+        function showRestaurant() {
+            $("#SearchResult").hide();
+            $("#theMap").hide();
+            $("#restaurant").show();
+            $("#searchBox").hide();
+            orderView = 1;
+        }
+
+        function backToList() {
+            $("#searchBox").show();
+            if (currentView == 0) {
+                showResult();
+            }
+            else {
+                showMap();
+            }
+            orderView = 0;
+
+        }
+
+
+        //About search AJAX
+        $("#theSubmit").click(function () {
+            console.log("yes clicked");
+
+            var $form = $("#searchForm");
+            console.log($form.attr('action'));
+            console.log($form.serialize());
+            clearAllMarkers();
+            $.ajax({
+                type: "POST",
+                url: $form.attr('action'),
+                data: $form.serialize(),
+                success: resultFunction,
+                beforeSend: showLoading,
+                complete: completeFunction,
+            });
+            if (orderView == 1) {
+                if (currentView == 0) {
+                    showResult();
+                }
+                else {
+                    showMap();
+                }
+            }
+            console.log("done");
+        })
+
+        var completeFunction = function () {
+            $("#loader").addClass("hidden")
+        }
+        var showLoading = function () {
+            $("#loader").removeClass("hidden")
+
+        }
+
+        var resultFunction = function (data) {
+            $("#SearchResult").html(data)
+        }
+
+
+
+
+    </script>
+
+}
+
+
+

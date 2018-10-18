@@ -1,1 +1,132 @@
-﻿
+﻿@model IEnumerable<FitnessMeal.Models.Restaurant>
+
+<script>
+    var markers = [];
+    var theEvent;
+    function getRestaurant(event) {
+        console.log("shop clicked");
+        console.log(event);
+        theEvent = event;
+        showLoading
+        var restaurantID = event.value;
+        var url = "/FOOD_ITEM/Shop/" + event.id
+        console.log("the Url:" + url)
+        var getItemFunction = function (result) {
+            console.log("receive response" + result)
+            $("#restaurant").html(result);
+            console.log("show restaurant")
+            completeFunction;
+            showRestaurant();
+        }
+
+        console.log("try get")
+        $.get(
+            url,
+            getItemFunction
+        );
+        
+    }
+</script>
+
+@{
+    int count = 1;
+}
+
+@foreach (var item in Model)
+{
+    <div class="card card-nav-tabs  col-12 col-sm-12 col-md-12">
+        @{ 
+            String Adress = item.ADRESS_FIRST_LINE +
+           " " + item.STREET_NO + " " + item.STREET_RD + " " +
+           item.SURBURB + " " + item.STATE + " " + item.POSTCODE;
+        }
+        <div class="card-body" style="width:100%;padding:0">
+            <h5 style="margin-top:0">@item.RESTAURANT_NAME</h5>
+            <div class="row">
+                <div class="justify-content-center align-items-center col-12 col-sm-6 col-md-4">
+                    <div>Cuisine: @item.Main_CUSINE</div>
+                    <div>@item.DESCRIPTION</div>
+                </div>
+                <div class="justify-content-center align-items-end col-12 col-sm-3 col-md-6">
+                    <div>Distance: @item.DISTANCE Km</div>
+                    <div>Address: @Adress</div>
+                </div>
+                <div class="justify-content-center col-12 col-sm-2 col-md-2">
+                    <button class="btn btn-primary pull-right" type="submit" value="@item.RESTAURANT_ID" id="@item.RESTAURANT_ID" onclick="getRestaurant(this)">Choose</button>
+                </div>
+            </div>
+        </div>
+        <script>
+        markers.push({
+            "id":@item.RESTAURANT_ID,
+            "name":"@item.RESTAURANT_NAME",
+            "number": "@count",
+            "position": { lat: @item.LATITUDE, lng: @item.LONGITUDE },
+            "mainCusine":"@item.Main_CUSINE",
+            "description":"@item.DESCRIPTION",
+            "distance":@item.DISTANCE,
+            "adress": "@Adress",
+            "link":"/FOOD_ITEM/Shop/"+@item.RESTAURANT_ID
+            });
+
+        </script>
+        @{ 
+            count += 1;
+        }
+        </div>
+ }
+
+<script>
+    var selfIcon = {
+            path: 'M0-48c-9.8 0-17.7 7.8-17.7 17.4 0 15.5 17.7 30.6 17.7 30.6s17.7-15.4 17.7-30.6c0-9.6-7.9-17.4-17.7-17.4z',
+            fillColor: 'orange',
+            fillOpacity: 1,
+            scale: 0.5,
+            strokeColor: 'orange',
+            strokeWeight: 0,
+            anchor: new google.maps.Point(1, 1),
+            labelOrigin: new google.maps.Point(1, -25),
+    };
+    clearAllMarkers();
+    for (i in markers) {
+        var mark = markers[i];
+        console.log(mark);
+        var theMarker = new google.maps.Marker({
+            position: mark.position,
+            icon: selfIcon,
+            map: theMap,
+            label: {
+                text: mark.number,
+                color: 'white',
+                fontWeight: 'bold'
+            }
+        })
+        markerList.push(theMarker);
+        var theContent =
+            '<h6>' + mark.name + '</h6>' +
+            '<p> Cuisine: ' + mark.mainCusine + '</p>' +
+            '<p>' + mark.description + '</p>' +
+            '<button class="btn btn-primary btn-sm" type="submit" value="' + mark.id + '" id="' + mark.id + '" onclick="getRestaurant(this)">Order</button>';
+
+        theMarker.info = new google.maps.InfoWindow({
+            content: theContent
+        });
+
+        
+        google.maps.event.addListener(theMarker, 'click', function () {
+            console.log("marker: ");
+            console.log(this);
+            console.log("infowindow: ");
+            console.log(this.info);
+            if (!this.info.getMap()) {
+                this.info.open(theMap, this);
+            }
+            else {
+                this.info.close();
+            }
+        });
+
+        console.log("show marker:" + mark.number)
+    }
+</script>
+

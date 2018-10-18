@@ -5,163 +5,207 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Edit @Model.RESTAURANT_NAME</h2>
+@{
+    String Address = Model.STREET_NO + " " + Model.STREET_RD + " " +
+        Model.SURBURB + " " + Model.STATE + " " + Model.POSTCODE;
+
+
+}
+
+<h2>@Model.RESTAURANT_NAME</h2>
 
 
 <div class="row">
 
-    <div class="col-md-6">
-        <label class="" for="selectaddress">Search Address or Click on Map to Select Address</label>
-        <div name="selectaddress">
-
-            <input class="inputbox col-md-9" id="address" type="text">
-            <button class="btn btn-success" id='search'>Search</button>
-
-        </div>
-        <div id="map"></div>
-    </div>
-
-    <div class="col-md-6">
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
-
-            <div class="form-horizontal">
-
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-
-                @Html.EditorFor(model => model.USER_ID, new { htmlAttributes = new { @class = "form-control hidden" } })
-                @Html.EditorFor(model => model.RESTAURANT_ID, new { htmlAttributes = new { @class = "form-control hidden" } })
-                <div class="form-group">
-                    @Html.LabelFor(model => model.RESTAURANT_NAME, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div>
-                        @Html.EditorFor(model => model.RESTAURANT_NAME, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.RESTAURANT_NAME, "", new { @class = "text-danger" })
+    <div class="paddingLR col-md-6 two">
+        <div class="card card-body">
+            <div>
+                <label class="" for="selectaddress">Search Address or Click on Map to Select Address</label>
+                <div class="row" name="selectaddress">
+                    <div class="col-8 align-self-center">
+                        <input class="inputbox" id="address" type="text">
                     </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.DESCRIPTION, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div>
-                        @Html.EditorFor(model => model.DESCRIPTION, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.DESCRIPTION, "", new { @class = "text-danger" })
+                    <div  class="col-4 text-center">
+                        <button class="btn btn-success" id='search'>Search</button>
                     </div>
+                    
                 </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Main_CUSINE, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div>
-                        @Html.DropDownListFor(model => model.Main_CUSINE, ViewBag.CUSINES as SelectList, "--Select Cuisine--", new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Main_CUSINE, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-
-
-                <div class="form-group">
-                    <lable class="control-label col-md-2" for="ADRESS_FIRST_LINE">Unit No./Room No./Shop No.</lable>
-                    <div>
-                        @Html.EditorFor(model => model.ADRESS_FIRST_LINE, new { htmlAttributes = new { @class = "form-control", @placeholder = "Room No./Unit No. Leave empty if don't have" } })
-                        @Html.ValidationMessageFor(model => model.ADRESS_FIRST_LINE, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group ">
-                    @{
-                        String Address = Model.STREET_NO + " " + Model.STREET_RD + " " +
-                            Model.SURBURB + " " + Model.STATE + " " + Model.POSTCODE;
-
-
-                    }
-                    <lable class="control-label col-md-2" for="selectedAdress">Your selected adress(Must contain street No.)</lable>
-                    <input class="inputbox-disabled" disabled id="selectedAdress" placeholder="Please select address through map" value="@Address" type="text">
-                </div>
-                <div class="form-group ">
-                    @Html.ValidationMessage("STREET_NO", "", new { @class = "text-danger" })
-                    @Html.ValidationMessage("STREET_RD", "", new { @class = "text-danger" })
-                    @Html.ValidationMessage("SURBURB", "", new { @class = "text-danger" })
-                    @Html.ValidationMessage("POSTCODE", "", new { @class = "text-danger" })
-                    @Html.ValidationMessage("STATE", "", new { @class = "text-danger" })
-                    @Html.ValidationMessage("LATITUDE", "", new { @class = "text-danger" })
-                    @Html.ValidationMessage("LONGITUDE", "", new { @class = "text-danger" })
-
-
-                </div>
-                <div class="form-group hidden">
-                    @Html.LabelFor(model => model.STREET_NO, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div>
-                        @Html.EditorFor(model => model.STREET_NO, new { htmlAttributes = new { @class = "form-control", @id = "theStreet_No" } })
-
-                    </div>
-                </div>
-
-                <div class="form-group hidden">
-                    @Html.LabelFor(model => model.STREET_RD, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div>
-                        @Html.EditorFor(model => model.STREET_RD, new { htmlAttributes = new { @class = "form-control", @id = "theStreet" } })
-
-                    </div>
-                </div>
-
-                <div class="form-group hidden">
-                    @Html.LabelFor(model => model.SURBURB, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div>
-                        @Html.EditorFor(model => model.SURBURB, new { htmlAttributes = new { @class = "form-control", @id = "theSurburb" } })
-
-                    </div>
-                </div>
-
-                <div class="form-group hidden">
-                    @Html.LabelFor(model => model.POSTCODE, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div>
-                        @Html.EditorFor(model => model.POSTCODE, new { htmlAttributes = new { @class = "form-control", @id = "thePostcode" } })
-
-                    </div>
-                </div>
-
-                <div class="form-group hidden">
-                    @Html.LabelFor(model => model.STATE, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div>
-                        @Html.EditorFor(model => model.STATE, new { htmlAttributes = new { @class = "form-control", @id = "theState" } })
-
-                    </div>
-                </div>
-
-                <div class="form-group hidden">
-                    @Html.LabelFor(model => model.LATITUDE, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div>
-                        @Html.EditorFor(model => model.LATITUDE, new { htmlAttributes = new { @class = "form-control", @id = "theLat" } })
-
-                    </div>
-                </div>
-
-                <div class="form-group hidden">
-                    @Html.LabelFor(model => model.LONGITUDE, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div>
-                        @Html.EditorFor(model => model.LONGITUDE, new { htmlAttributes = new { @class = "form-control", @id = "theLng" } })
-
-                    </div>
-                </div>
-
-
-
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Create" class="btn btn-default" />
-                    </div>
-                </div>
-
+                <div class="mapCreate" id="map"></div>
             </div>
-        }
+        </div>
     </div>
+
+
+
+    <div class="paddingLR col-md-6 two" >
+        <div class="card card-body">
+            <div>
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+                        @Html.EditorFor(model => model.USER_ID, new { htmlAttributes = new { @class = "form-control hidden" } })
+                        @Html.EditorFor(model => model.RESTAURANT_ID, new { htmlAttributes = new { @class = "form-control hidden" } })
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.RESTAURANT_NAME, htmlAttributes: new { @class = "control-label " })
+                            <div>
+                                @Html.EditorFor(model => model.RESTAURANT_NAME, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.RESTAURANT_NAME, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.DESCRIPTION, htmlAttributes: new { @class = "control-label " })
+                            <div>
+                                @Html.EditorFor(model => model.DESCRIPTION, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.DESCRIPTION, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Main_CUSINE, htmlAttributes: new { @class = "control-label " })
+                            <div>
+                                @Html.DropDownListFor(model => model.Main_CUSINE, ViewBag.CUSINES as SelectList, "--Select Cuisine--", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Main_CUSINE, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class=" col-6">
+                                    <lable class="control-label col-md-2" for="opentime1">Open Time:</lable>
+
+                                    <div class="input-group date" id="opentime1" data-target-input="nearest">
+                                        <input type="text" onchange="setTime()" name="OPENTIME" class="form-control datetimepicker-input" data-target="#opentime1" />
+                                        <div class="input-group-append" data-target="#opentime1" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-clock-o"></i></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class=" col-6">
+                                    <lable class="control-label col-md-2" for="closetime1">Close Time:</lable>
+                                    <div class="input-group date" id="closetime1" data-target-input="nearest">
+                                        <input type="text" onchange="setTime()" name="CLOSETIME" class="form-control datetimepicker-input" data-target="#closetime1" />
+                                        <div class="input-group-append" data-target="#closetime1" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-clock-o"></i></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <lable class="control-label " for="ADRESS_FIRST_LINE">Unit No./Room No./Shop No.</lable>
+                            <div>
+                                @Html.EditorFor(model => model.ADRESS_FIRST_LINE, new { htmlAttributes = new { @class = "form-control", @placeholder = "Room No./Unit No. Leave empty if don't have" } })
+                                @Html.ValidationMessageFor(model => model.ADRESS_FIRST_LINE, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group ">
+                            
+                            <lable class="control-label " for="selectedAdress">Your selected adress(Must contain street No.)</lable>
+                            <input class="inputbox-disabled" disabled id="selectedAdress" placeholder="Please select address through map" value="@Address" type="text">
+                        </div>
+                        <div class="form-group ">
+                            @Html.ValidationMessage("STREET_NO", "", new { @class = "text-danger" })
+                            @Html.ValidationMessage("STREET_RD", "", new { @class = "text-danger" })
+                            @Html.ValidationMessage("SURBURB", "", new { @class = "text-danger" })
+                            @Html.ValidationMessage("POSTCODE", "", new { @class = "text-danger" })
+                            @Html.ValidationMessage("STATE", "", new { @class = "text-danger" })
+                            @Html.ValidationMessage("LATITUDE", "", new { @class = "text-danger" })
+                            @Html.ValidationMessage("LONGITUDE", "", new { @class = "text-danger" })
+
+
+                        </div>
+                        <div class="form-group hidden">
+                            @Html.LabelFor(model => model.STREET_NO, htmlAttributes: new { @class = "control-label " })
+                            <div>
+                                @Html.EditorFor(model => model.STREET_NO, new { htmlAttributes = new { @class = "form-control", @id = "theStreet_No" } })
+
+                            </div>
+                        </div>
+
+                        <div class="form-group hidden">
+                            @Html.LabelFor(model => model.STREET_RD, htmlAttributes: new { @class = "control-label " })
+                            <div>
+                                @Html.EditorFor(model => model.STREET_RD, new { htmlAttributes = new { @class = "form-control", @id = "theStreet" } })
+
+                            </div>
+                        </div>
+
+                        <div class="form-group hidden">
+                            @Html.LabelFor(model => model.SURBURB, htmlAttributes: new { @class = "control-label " })
+                            <div>
+                                @Html.EditorFor(model => model.SURBURB, new { htmlAttributes = new { @class = "form-control", @id = "theSurburb" } })
+
+                            </div>
+                        </div>
+
+                        <div class="form-group hidden">
+                            @Html.LabelFor(model => model.POSTCODE, htmlAttributes: new { @class = "control-label " })
+                            <div>
+                                @Html.EditorFor(model => model.POSTCODE, new { htmlAttributes = new { @class = "form-control", @id = "thePostcode" } })
+
+                            </div>
+                        </div>
+
+                        <div class="form-group hidden">
+                            @Html.LabelFor(model => model.STATE, htmlAttributes: new { @class = "control-label " })
+                            <div>
+                                @Html.EditorFor(model => model.STATE, new { htmlAttributes = new { @class = "form-control", @id = "theState" } })
+
+                            </div>
+                        </div>
+
+                        <div class="form-group hidden">
+                            @Html.LabelFor(model => model.LATITUDE, htmlAttributes: new { @class = "control-label " })
+                            <div>
+                                @Html.EditorFor(model => model.LATITUDE, new { htmlAttributes = new { @class = "form-control", @id = "theLat" } })
+
+                            </div>
+                        </div>
+
+                        <div class="form-group hidden">
+                            @Html.LabelFor(model => model.LONGITUDE, htmlAttributes: new { @class = "control-label " })
+                            <div>
+                                @Html.EditorFor(model => model.LONGITUDE, new { htmlAttributes = new { @class = "form-control", @id = "theLng" } })
+
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Submit" class="btn btn-primary" />
+                            </div>
+                        </div>
+
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+
 
 
 </div>
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "text-white btn btn-warning" })
 </div>
+
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
@@ -169,14 +213,42 @@
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCdniQ6G8exQ_38DM0nbEigXUDmh6mscEc&callback=initMap">
     </script>
     <script defer>
+        $("#navBand").show();
+        $("#navBand").html("Edit Restaurant");
         $.validator.setDefaults({
             ignore: [],
             // any other default options and/or rules
         });
+        var defaultOpen = "@Model.OPENTIME";
+        var defaultClose = "@Model.CLOSETIME";
 
-        var cenLat = -34.397
-        var cenLng = 150.644
-        var theZoom = 6
+        $(function () {
+            $('#opentime1').datetimepicker({
+                format: 'HH:mm',
+                defaultDate: moment(defaultOpen ? defaultOpen:"00:00:00", "HH:mm:ss")
+            });
+        });
+
+        $(function () {
+            $('#closetime1').datetimepicker({
+                format: 'HH:mm',
+                defaultDate:moment(defaultClose ? defaultClose:"00:00:00", "HH:mm:ss")
+            });
+        });
+
+        //MAPS
+        var cenLat = @Model.LATITUDE;
+        var cenLng = @Model.LONGITUDE;
+        var theZoom = 13;
+
+        
+        function onstart() {
+            var theUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=" + "@Address" + "&key=AIzaSyCdniQ6G8exQ_38DM0nbEigXUDmh6mscEc"
+
+            $.ajax({
+                url: theUrl, success: function (result) { successFunction(result) }
+            });
+        }
 
         function successFunction(result) {
             if (result.status == "OK") {
@@ -227,7 +299,7 @@
                 zoom: theZoom
             });
             var geocoder = new google.maps.Geocoder();
-
+            onstart();
             google.maps.event.addListener(map, 'click', function (event) {
 
                 var theLat = event.latLng.lat();

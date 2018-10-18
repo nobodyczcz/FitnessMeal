@@ -137,7 +137,7 @@ namespace FitnessMeal.Models
 
             modelBuilder.Entity<RESERVE_PICK_UP>()
                 .Property(e => e.TOTAL_ENERGY)
-                .HasPrecision(10, 0);
+                .HasPrecision(10, 2);
 
             modelBuilder.Entity<RESERVE_PICK_UP>()
                 .HasMany(e => e.ORDER_ITEM)

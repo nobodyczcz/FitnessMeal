@@ -41,7 +41,7 @@ namespace FitnessMeal.Models
         [StringLength(10)]
         public string STREET_NO { get; set; }
 
-        [Column("STREET/RD")]
+        [Column("STREET_RD")]
         [Required]
         [StringLength(50)]
         public string STREET_RD { get; set; }
@@ -58,16 +58,26 @@ namespace FitnessMeal.Models
         public string STATE { get; set; }
 
         [Required]
-        [Column(TypeName = "numeric")]
-        public decimal LATITUDE { get; set; }
+        [DisplayFormat(DataFormatString = "{0:0.00000000000}", ApplyFormatInEditMode = true)]
+        public double LATITUDE { get; set; }
 
         [Required]
-        [Column(TypeName = "numeric")]
-        public decimal LONGITUDE { get; set; }
+        [DisplayFormat(DataFormatString = "{0:0.00000000000}", ApplyFormatInEditMode = true)]
+        public double LONGITUDE { get; set; }
 
         public double? SCORE { get; set; }
 
         public double? DISTANCE { get; set; }
+
+        [Required]
+        [DataType(DataType.Time)]
+        [DisplayFormat(DataFormatString = "hh:mm tt", ApplyFormatInEditMode = true)]
+        public TimeSpan? OPENTIME { get; set; }
+
+        [Required]
+        [DataType(DataType.Time)]
+        [DisplayFormat(DataFormatString = "hh:mm tt", ApplyFormatInEditMode = true)]
+        public TimeSpan? CLOSETIME { get; set; }
 
 
 

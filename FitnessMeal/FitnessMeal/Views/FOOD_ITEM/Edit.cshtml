@@ -5,7 +5,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Edit</h2>
 
 
 @using (Html.BeginForm())
@@ -182,4 +181,8 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+<script>
+        $("#navBand").show();
+        $("#navBand").html("Edit Food");
+</script>
 }

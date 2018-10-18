@@ -1,0 +1,243 @@
+﻿@model FitnessMeal.Models.JsonData
+@{
+    ViewBag.Title = "Restaurant";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css" rel="stylesheet" />
+
+@Html.AntiForgeryToken()
+<div class="row">
+    <div class="card card-body" style="width:100%">
+        <div>
+            <button class="btn btn-warning" id="yestoday">Yestoday</button>
+            <button class="btn btn-warning" id="dayView">Today</button>
+            <button class="btn btn-warning" id="tomorrow">Tomorrow</button>
+            <button class="btn btn-warning" id="halfDay">6 Hour View</button>
+        </div>
+        <div id="visualization">
+        </div>
+    </div>
+
+</div>
+
+
+
+@section Scripts {
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
+    <script defer>
+        //initialization
+        $("#navBand").show();
+        $("#navBand").html("Order Dashboard");
+        //data initialization
+        var jsonData = '@Model.data';
+        var data = JSON.parse(jsonData.replace(/&quot;/g, '"'));
+        console.log(data);
+
+
+        // DOM element where the Timeline will be attached
+        var container = document.getElementById('visualization');
+
+
+        //group setting
+        // Optional: a field 'className', 'style', 'order', [properties]
+        // more groups...
+        var groups = [];
+
+
+        //Set time line data;
+        var itemArray = [];
+        var itemContent = {};
+
+        data.forEach(function (rest) {
+            var newGroup = {};
+            newGroup.id = rest.restaurantID;
+            newGroup.content = rest.restaurantName;
+
+            rest.orderAndItem.forEach(function (order) {
+                console.log(order)
+                var newItem = {};
+                newItem.id = order.orderID;
+                newItem.group = newGroup.id;
+                newItem.start = moment(order.OrderTime.replace("T"," "),"YYYY-MM-DD HH:mm:ss");
+                newItem.end = moment(order.PickTime.replace("T", " "), "YYYY-MM-DD HH:mm:ss");
+                newItem.content = "";
+                var button = "";
+                if (order.state == "waiting") {
+                    newItem.className = "orange";
+                    button = '<button class="btn btn-sm btn-primary btn-round xs" id=' + newItem.id+' value="confirm" onclick="changeState(this)">Confirm</button>';
+                    button =button+ '<button class="btn btn-sm btn-default btn-round xs" id=' + newItem.id +' value="refuse" onclick="changeState(this)">Refuse</button>';
+
+                }
+                else if (order.state == "confirmed") {
+                    newItem.className = "yellow";
+                    button = '<button class="btn btn-sm btn-primary btn-round xs" id=' + newItem.id +' value="ready" onclick="changeState(this)">Ready</button>';
+                }
+                else if (order.state == "ready") {
+                    newItem.className = "green";
+                    button = '<button class="btn btn-sm btn-primary btn-round xs" id=' + newItem.id +' value="done" onclick="changeState(this)">Done</button>';
+
+                }
+                else if (order.state == "refused") {
+                    newItem.className = "gray";
+                }
+                else if (order.state == "close") {
+                    newItem.className = "gray";
+                }
+
+                newItem.content = button + newItem.content;
+
+                var itemString="";
+                order.items.forEach(function (i) {
+                    itemString = itemString + i.itemName + " X " + i.quantity + " ";
+                })
+                itemContent[newItem.id] = itemString;
+                newItem.content = newItem.content + itemString
+                itemArray.push(newItem)
+
+            });
+            groups.push(newGroup);
+
+
+        });
+
+        // Create a DataSet (allows two way data-binding)
+        var items = new vis.DataSet(itemArray);
+
+        var test;
+        // Configuration for the Timeline
+        var options = {
+            minHeight:"200px",
+            start: moment(moment().format("YYYY-MM-DD")),
+            end: moment(moment().format("YYYY-MM-DD")).add(1, "day"),
+            zoomKey: 'altKey',
+            zoomMax: 604800000,
+            zoomMin: 10800000,
+            horizontalScroll: true,
+
+            editable: {
+                        // add new items by double tapping
+                updateTime: true,
+                remove: false
+            },
+            stack: true,
+            onMove: function (item, callback) {
+                var title = 'Do you really want to move the item to\n' +
+                    'start: ' + item.start + '\n' +
+                    'end: ' + item.end + '?';
+
+                prettyConfirm('Move item', title, function (ok) {
+                    if (ok) {
+                        test = item.start;
+                        changeItme(item.id, moment(item.start).format("YYYY-MM-DD HH:mm:ss"), moment(item.end).format("YYYY-MM-DD HH:mm:ss")); // send back item as confirmation (can be changed)
+                    }
+                    else {
+                        callback(null); // cancel editing item
+                    }
+                });
+            },
+        };
+
+        // Create a Timeline
+        var timeline = new vis.Timeline(container, items, groups, options);
+
+        //events
+        document.getElementById('dayView').onclick = function () {
+
+                timeline.setWindow(moment(moment().format("YYYY-MM-DD")), moment(moment().add(1, "day").format("YYYY-MM-DD")));
+        };
+        document.getElementById('tomorrow').onclick = function () {
+
+            timeline.setWindow(moment(moment().add(1, "day").format("YYYY-MM-DD")), moment(moment().add(2, "day").format("YYYY-MM-DD")));
+        };
+        document.getElementById('yestoday').onclick = function () {
+
+            timeline.setWindow(moment(moment().add(-1, "day").format("YYYY-MM-DD")), moment(moment().format("YYYY-MM-DD")));
+        };
+        document.getElementById('halfDay').onclick = function () {
+
+            timeline.setWindow(moment().add(-3, "hour"), moment().add(+3, "hour"));
+        };
+
+        //change state
+        function changeState(button) {
+            var action = button.value;
+            var orderID = button.id;
+            var theUrl = "/RESERVE_PICK_UP/ChangeState";
+            console.log(action + " " + orderID);
+            $.ajax({
+                type: 'POST',
+                url: theUrl,
+                data: {
+                    "id": orderID,
+                    "action": action,
+                    "__RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val()
+                },
+                success: function (data) { SuccessFunction(orderID,action) },
+            }
+            )
+        };
+
+        function SuccessFunction(id,action) {
+            var data = timeline.itemSet.items[id];
+            var button="";
+
+             if (action == "confirm") {
+                data.data.className = "yellow";
+                button = '<button class="btn btn-sm btn-primary btn-round xs" id=' + id + ' value="ready" onclick="changeState(this)">Ready</button>';
+            }
+            else if (action == "ready") {
+                data.data.className = "green";
+                 button = '<button class="btn btn-sm btn-primary btn-round xs" id=' + id + ' value="done" onclick="changeState(this)">Done</button>';
+
+            }
+            else if (action == "refuse") {
+                data.data.className = "gray";
+            }
+            else if (action == "done") {
+                data.data.className = "gray";
+            }
+
+            data.data.content = button + itemContent[id];
+            console.log(data.data.content);
+            timeline.itemSet.items[id].setData(data.data);
+        };
+
+        function prettyConfirm(title, text, callback) {
+            swal({
+                title: title,
+                text: text,
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55"
+            }, callback);
+        }
+
+        function changeItme(orderID,start, end) {
+            console.log(orderID+start+end)
+            var theUrl = "/RESERVE_PICK_UP/ChangeTime";
+            
+            $.ajax({
+                type: 'POST',
+                url: theUrl,
+                data: {
+                    "id": orderID,
+                    "start": start,
+                    "end":end,
+                    "__RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val()
+                },
+                error: errorFunction ,
+            }
+            )
+        }
+
+        var errorFunction = function (error) {
+            console.log(error)
+        }
+
+        
+    </script>
+}

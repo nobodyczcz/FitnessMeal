@@ -1,0 +1,58 @@
+﻿@model FitnessMeal.Models.RESERVE_PICK_UP
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>RESERVE_PICK_UP</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.ORDER_ID)
+    @Html.HiddenFor(model => model.USER_ID)
+    @Html.HiddenFor(model => model.RESTAURANT_ID)
+    @Html.HiddenFor(model => model.ORDER_PRICE)
+    @Html.HiddenFor(model => model.NO_OF_EATER)
+    @Html.HiddenFor(model => model.TOTAL_ENERGY)
+    @Html.HiddenFor(model => model.STATE)
+    @Html.HiddenFor(model => model.REMARKS)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ORDER_TIME, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ORDER_TIME, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ORDER_TIME, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.PICK_UP_TIME, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.PICK_UP_TIME, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.PICK_UP_TIME, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+
+
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

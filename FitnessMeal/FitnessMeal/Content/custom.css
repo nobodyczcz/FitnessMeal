@@ -1,15 +1,68 @@
-﻿#map {
-    padding: 10%;
+﻿.vis-time-axis.grid.vis-odd {
+    background: #F5F5F5;
+}
+.vis-item.lightblue {
+    background-color: #B0E2FF;
+}
+
+.vis-item.lightpurple {
+    background-color: #EAEAEA;
+}
+
+.vis-item.orange {
+    background-color: #FA8072;
+}
+
+.vis-item.green {
+    background-color: #B4EEB4;
+    border-radius: 10px;
+}
+
+.vis-item.yellow {
+    background-color: #FFFFCC;
+}
+.vis-item.gray {
+    background-color: #707070;
+}
+
+.vis-item {
+    border:0px;
+    border-radius: 4px;
+}
+
+.xs{
+    margin:0;
+    padding:4px;
+}
+.mapCreate {
+    
     border-radius: 5px;
-    height: 70% ;
-    margin-bottom:50%;
+    min-height:385px;
+    height: 100% ;
+}
+
+.two {
+    display: table-cell;
+    height:100%;
+}
+
+.recPhoto{
+    width:90%;
+    border-radius:5px;
+    margin-left:5%;
+    margin-top:5%
+
+}
+
+.mapIndex {
+    padding: 5%;
+    border-radius: 5px;
 }
 
 #smaller-box{
     padding:50%;
 }
-.header-photo{
-    width:100%;
+.header-photo {
 }
 
 .paddingBT{
@@ -67,4 +120,15 @@
 
 .align-right{
     float:right;
+}
+.center-vertical {
+    position: relative;
+    top: 50%;
+}
+
+.title {
+    width: 300px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

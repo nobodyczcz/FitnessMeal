@@ -34,6 +34,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <FilesToIncludeForPublish>AllFilesInProjectFolder</FilesToIncludeForPublish>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -48,6 +49,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Win32.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Win32.Primitives.4.0.1\lib\net46\Microsoft.Win32.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.AppContext, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -146,9 +150,6 @@
     <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
@@ -249,6 +250,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MEALsController.cs" />
     <Compile Include="Controllers\MEAL_ITEMSController.cs" />
+    <Compile Include="Controllers\RESERVE_PICK_UPController.cs" />
     <Compile Include="Controllers\RestaurantsController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\USERsController.cs" />
@@ -265,6 +267,7 @@
     <Compile Include="Models\MEAL.cs" />
     <Compile Include="Models\MEAL_ITEMS.cs" />
     <Compile Include="Models\Model.cs" />
+    <Compile Include="Models\orderModel.cs" />
     <Compile Include="Models\ORDER_ITEM.cs" />
     <Compile Include="Models\ORDER_MEAL.cs" />
     <Compile Include="Models\RESERVE_PICK_UP.cs" />
@@ -283,11 +286,190 @@
       <DependentUpon>FitnessMeal.mdf</DependentUpon>
     </Content>
     <Content Include="Content\bootstrap-datepicker.css" />
+    <Content Include="Content\bootstrap-switch.css" />
+    <Content Include="Content\bootstrap-switch.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\icons\abseiling.svg" />
+    <Content Include="Content\icons\accounting.svg" />
+    <Content Include="Content\icons\airport.svg" />
+    <Content Include="Content\icons\amusement-park.svg" />
+    <Content Include="Content\icons\aquarium.svg" />
+    <Content Include="Content\icons\archery.svg" />
+    <Content Include="Content\icons\art-gallery.svg" />
+    <Content Include="Content\icons\assistive-listening-system.svg" />
+    <Content Include="Content\icons\atm.svg" />
+    <Content Include="Content\icons\audio-description.svg" />
+    <Content Include="Content\icons\bakery.svg" />
+    <Content Include="Content\icons\bank.svg" />
+    <Content Include="Content\icons\bar.svg" />
+    <Content Include="Content\icons\baseball.svg" />
+    <Content Include="Content\icons\beauty-salon.svg" />
+    <Content Include="Content\icons\bicycle-store.svg" />
+    <Content Include="Content\icons\bicycling.svg" />
+    <Content Include="Content\icons\boat-ramp.svg" />
+    <Content Include="Content\icons\boat-tour.svg" />
+    <Content Include="Content\icons\boating.svg" />
+    <Content Include="Content\icons\book-store.svg" />
+    <Content Include="Content\icons\bowling-alley.svg" />
+    <Content Include="Content\icons\braille.svg" />
+    <Content Include="Content\icons\bus-station.svg" />
+    <Content Include="Content\icons\cafe.svg" />
+    <Content Include="Content\icons\campground.svg" />
+    <Content Include="Content\icons\canoe.svg" />
+    <Content Include="Content\icons\car-dealer.svg" />
+    <Content Include="Content\icons\car-rental.svg" />
+    <Content Include="Content\icons\car-repair.svg" />
+    <Content Include="Content\icons\car-wash.svg" />
+    <Content Include="Content\icons\casino.svg" />
+    <Content Include="Content\icons\cemetery.svg" />
+    <Content Include="Content\icons\chairlift.svg" />
+    <Content Include="Content\icons\church.svg" />
+    <Content Include="Content\icons\circle.svg" />
+    <Content Include="Content\icons\city-hall.svg" />
+    <Content Include="Content\icons\climbing.svg" />
+    <Content Include="Content\icons\closed-captioning.svg" />
+    <Content Include="Content\icons\clothing-store.svg" />
+    <Content Include="Content\icons\compass.svg" />
+    <Content Include="Content\icons\convenience-store.svg" />
+    <Content Include="Content\icons\courthouse.svg" />
+    <Content Include="Content\icons\cross-country-skiing.svg" />
+    <Content Include="Content\icons\crosshairs.svg" />
+    <Content Include="Content\icons\dentist.svg" />
+    <Content Include="Content\icons\department-store.svg" />
+    <Content Include="Content\icons\diving.svg" />
+    <Content Include="Content\icons\doctor.svg" />
+    <Content Include="Content\icons\electrician.svg" />
+    <Content Include="Content\icons\electronics-store.svg" />
+    <Content Include="Content\icons\embassy.svg" />
+    <Content Include="Content\icons\expand.svg" />
+    <Content Include="Content\icons\female.svg" />
+    <Content Include="Content\icons\finance.svg" />
+    <Content Include="Content\icons\fire-station.svg" />
+    <Content Include="Content\icons\fish-cleaning.svg" />
+    <Content Include="Content\icons\fishing-pier.svg" />
+    <Content Include="Content\icons\fishing.svg" />
+    <Content Include="Content\icons\florist.svg" />
+    <Content Include="Content\icons\food.svg" />
+    <Content Include="Content\icons\fullscreen.svg" />
+    <Content Include="Content\icons\funeral-home.svg" />
+    <Content Include="Content\icons\furniture-store.svg" />
+    <Content Include="Content\icons\gas-station.svg" />
+    <Content Include="Content\icons\general-contractor.svg" />
+    <Content Include="Content\icons\golf.svg" />
+    <Content Include="Content\icons\grocery-or-supermarket.svg" />
+    <Content Include="Content\icons\gym.svg" />
+    <Content Include="Content\icons\hair-care.svg" />
+    <Content Include="Content\icons\hang-gliding.svg" />
+    <Content Include="Content\icons\hardware-store.svg" />
+    <Content Include="Content\icons\health.svg" />
+    <Content Include="Content\icons\hindu-temple.svg" />
+    <Content Include="Content\icons\horse-riding.svg" />
+    <Content Include="Content\icons\hospital.svg" />
+    <Content Include="Content\icons\ice-fishing.svg" />
+    <Content Include="Content\icons\ice-skating.svg" />
+    <Content Include="Content\icons\inline-skating.svg" />
+    <Content Include="Content\icons\insurance-agency.svg" />
+    <Content Include="Content\icons\jet-skiing.svg" />
+    <Content Include="Content\icons\jewelry-store.svg" />
+    <Content Include="Content\icons\kayaking.svg" />
+    <Content Include="Content\icons\laundry.svg" />
+    <Content Include="Content\icons\lawyer.svg" />
+    <Content Include="Content\icons\library.svg" />
+    <Content Include="Content\icons\liquor-store.svg" />
+    <Content Include="Content\icons\local-government.svg" />
+    <Content Include="Content\icons\location-arrow.svg" />
+    <Content Include="Content\icons\locksmith.svg" />
+    <Content Include="Content\icons\lodging.svg" />
+    <Content Include="Content\icons\low-vision-access.svg" />
+    <Content Include="Content\icons\male.svg" />
+    <Content Include="Content\icons\map-pin.svg" />
+    <Content Include="Content\icons\marina.svg" />
+    <Content Include="Content\icons\mosque.svg" />
+    <Content Include="Content\icons\motobike-trail.svg" />
+    <Content Include="Content\icons\movie-rental.svg" />
+    <Content Include="Content\icons\movie-theater.svg" />
+    <Content Include="Content\icons\moving-company.svg" />
+    <Content Include="Content\icons\museum.svg" />
+    <Content Include="Content\icons\natural-feature.svg" />
+    <Content Include="Content\icons\night-club.svg" />
+    <Content Include="Content\icons\open-captioning.svg" />
+    <Content Include="Content\icons\painter.svg" />
+    <Content Include="Content\icons\park.svg" />
+    <Content Include="Content\icons\parking.svg" />
+    <Content Include="Content\icons\pet-store.svg" />
+    <Content Include="Content\icons\pharmacy.svg" />
+    <Content Include="Content\icons\physiotherapist.svg" />
+    <Content Include="Content\icons\place-of-worship.svg" />
+    <Content Include="Content\icons\playground.svg" />
+    <Content Include="Content\icons\plumber.svg" />
+    <Content Include="Content\icons\point-of-interest.svg" />
+    <Content Include="Content\icons\police.svg" />
+    <Content Include="Content\icons\political.svg" />
+    <Content Include="Content\icons\post-box.svg" />
+    <Content Include="Content\icons\post-office.svg" />
+    <Content Include="Content\icons\postal-code-prefix.svg" />
+    <Content Include="Content\icons\postal-code.svg" />
+    <Content Include="Content\icons\rafting.svg" />
+    <Content Include="Content\icons\real-estate-agency.svg" />
+    <Content Include="Content\icons\restaurant.svg" />
+    <Content Include="Content\icons\roofing-contractor.svg" />
+    <Content Include="Content\icons\route-pin.svg" />
+    <Content Include="Content\icons\route.svg" />
+    <Content Include="Content\icons\rv-park.svg" />
+    <Content Include="Content\icons\sailing.svg" />
+    <Content Include="Content\icons\school.svg" />
+    <Content Include="Content\icons\scuba-diving.svg" />
+    <Content Include="Content\icons\search.svg" />
+    <Content Include="Content\icons\sheild.svg" />
+    <Content Include="Content\icons\shopping-mall.svg" />
+    <Content Include="Content\icons\sign-language.svg" />
+    <Content Include="Content\icons\skateboarding.svg" />
+    <Content Include="Content\icons\ski-jumping.svg" />
+    <Content Include="Content\icons\skiing.svg" />
+    <Content Include="Content\icons\sledding.svg" />
+    <Content Include="Content\icons\snow-shoeing.svg" />
+    <Content Include="Content\icons\snow.svg" />
+    <Content Include="Content\icons\snowboarding.svg" />
+    <Content Include="Content\icons\snowmobile.svg" />
+    <Content Include="Content\icons\spa.svg" />
+    <Content Include="Content\icons\square-pin.svg" />
+    <Content Include="Content\icons\square-rounded.svg" />
+    <Content Include="Content\icons\square.svg" />
+    <Content Include="Content\icons\stadium.svg" />
+    <Content Include="Content\icons\storage.svg" />
+    <Content Include="Content\icons\store.svg" />
+    <Content Include="Content\icons\subway-station.svg" />
+    <Content Include="Content\icons\surfing.svg" />
+    <Content Include="Content\icons\swimming.svg" />
+    <Content Include="Content\icons\synagogue.svg" />
+    <Content Include="Content\icons\taxi-stand.svg" />
+    <Content Include="Content\icons\tennis.svg" />
+    <Content Include="Content\icons\toilet.svg" />
+    <Content Include="Content\icons\trail-walking.svg" />
+    <Content Include="Content\icons\train-station.svg" />
+    <Content Include="Content\icons\transit-station.svg" />
+    <Content Include="Content\icons\travel-agency.svg" />
+    <Content Include="Content\icons\unisex.svg" />
+    <Content Include="Content\icons\university.svg" />
+    <Content Include="Content\icons\veterinary-care.svg" />
+    <Content Include="Content\icons\viewing.svg" />
+    <Content Include="Content\icons\volume-control-telephone.svg" />
+    <Content Include="Content\icons\walking.svg" />
+    <Content Include="Content\icons\waterskiing.svg" />
+    <Content Include="Content\icons\whale-watching.svg" />
+    <Content Include="Content\icons\wheelchair.svg" />
+    <Content Include="Content\icons\wind-surfing.svg" />
+    <Content Include="Content\icons\zoo.svg" />
+    <Content Include="Content\icons\zoom-in-alt.svg" />
+    <Content Include="Content\icons\zoom-in.svg" />
+    <Content Include="Content\icons\zoom-out-alt.svg" />
+    <Content Include="Content\icons\zoom-out.svg" />
     <Content Include="Content\img\ajax-loader.gif" />
     <Content Include="Content\img\apple-icon.png" />
     <Content Include="Content\img\bg5.jpg" />
+    <Content Include="Content\img\boost.jpg" />
+    <Content Include="Content\img\brunch.jpg" />
     <Content Include="Content\img\damir-bosnjak.jpg" />
     <Content Include="Content\img\default-avatar.png" />
     <Content Include="Content\img\faces\ayo-ogunseinde-1.jpg" />
@@ -304,10 +486,21 @@
     <Content Include="Content\img\faces\kaci-baum-2.jpg" />
     <Content Include="Content\img\favicon.png" />
     <Content Include="Content\img\header.jpg" />
-    <Content Include="Content\img\indexPhoto.jpg" />
+    <Content Include="Content\img\indexPhoto-320w.jpg" />
+    <Content Include="Content\img\indexPhoto-480w.jpg" />
+    <Content Include="Content\img\indexPhoto-800w.jpg" />
+    <Content Include="Content\img\indexPhoto-max.jpg" />
     <Content Include="Content\img\jan-sendereks.jpg" />
+    <Content Include="Content\img\jucie.jpg" />
     <Content Include="Content\img\logo-small.png" />
     <Content Include="Content\img\mike.jpg" />
+    <Content Include="Content\img\salad.jpg" />
+    <Content Include="Content\markers\map-pin.svg" />
+    <Content Include="Content\markers\route.svg" />
+    <Content Include="Content\markers\shield.svg" />
+    <Content Include="Content\markers\square-pin.svg" />
+    <Content Include="Content\markers\square-rounded.svg" />
+    <Content Include="Content\markers\square.svg" />
     <Content Include="Content\paper-dashboard.css" />
     <Content Include="Content\paper-dashboard.min.css" />
     <Content Include="Content\sidebar.css" />
@@ -318,30 +511,45 @@
     <Content Include="Content\Site.css" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Content\paper-dashboard.css.map" />
+    <Content Include="Scripts\bootstrap-switch.js" />
+    <Content Include="Scripts\bootstrap-switch.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\core\bootstrap.min.js" />
     <Content Include="Scripts\core\jquery.min.js" />
     <Content Include="Scripts\core\popper.min.js" />
+    <Content Include="Scripts\bootstrap.js.map" />
+    <Content Include="Scripts\bootstrap.min.js.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\localMoment.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\paper-dashboard.js" />
     <Content Include="Scripts\paper-dashboard.min.js" />
     <Content Include="Scripts\plugins\bootstrap-notify.js" />
     <Content Include="Scripts\plugins\chartjs.js" />
+    <Content Include="Scripts\plugins\moment.js" />
     <Content Include="Scripts\plugins\perfect-scrollbarjquery.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -400,6 +608,13 @@
     <Content Include="Views\MEALs\Edit.cshtml" />
     <Content Include="Views\MEALs\Index.cshtml" />
     <Content Include="Views\Home\_partialResult.cshtml" />
+    <Content Include="Views\FOOD_ITEM\_ShopPartial.cshtml" />
+    <Content Include="Views\RESERVE_PICK_UP\Create.cshtml" />
+    <Content Include="Views\RESERVE_PICK_UP\Delete.cshtml" />
+    <Content Include="Views\RESERVE_PICK_UP\Details.cshtml" />
+    <Content Include="Views\RESERVE_PICK_UP\Edit.cshtml" />
+    <Content Include="Views\RESERVE_PICK_UP\Index.cshtml" />
+    <Content Include="Views\RESERVE_PICK_UP\Restaurant.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
