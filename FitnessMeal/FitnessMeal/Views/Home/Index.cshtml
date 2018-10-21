@@ -236,7 +236,7 @@
         }
 
 
-
+        //get current location through webbroswer
         function getLocation() {
             console.log("get location");
             if (navigator.geolocation) {
@@ -247,10 +247,13 @@
             }
         }
 
+        //success function for get currentlocation
         function usePosition(position) {
             setPosition(position.coords.latitude, position.coords.longitude, "Your Current Position");
         }
 
+
+        //set a location as the center of map, and display the marker or this position, choos this address as search base. 
         function setPosition(lat, lng, locationName) {
             console.log("set location")
             theLat = lat;
@@ -274,6 +277,7 @@
 
         }
 
+        //reset the map center by the lat and lng recorded in theLat and theLng.
         function setMapCenter() {
             try {
                 theMap.setCenter({ lat: theLat, lng: theLng });
@@ -326,12 +330,14 @@
 
         //click events
 
+        //click get current location
         $("#getPosition").click(function () {
             x.html("wait for a moment....");
             x.removeClass("hidden");
             getLocation()
         });
 
+        //click change location button
         $("#changeLocation").click(function () {
             localStorage.setItem("theLat", null);
             localStorage.setItem("theLng", null);
@@ -340,6 +346,8 @@
             $("#searchBox").addClass("hidden");
         });
 
+
+        //click enter button to get address through geocoding
         $("#enterPost").click(function () {
             console.log("start search location")
             var theUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=" + $("#postCode").val().replace(" ", "+") + "&key=AIzaSyCdniQ6G8exQ_38DM0nbEigXUDmh6mscEc";
@@ -382,6 +390,8 @@
             orderView = 1;
         }
 
+
+        //click back to list to back to search result from restaurant page
         function backToList() {
             $("#searchBox").show();
             if (currentView == 0) {

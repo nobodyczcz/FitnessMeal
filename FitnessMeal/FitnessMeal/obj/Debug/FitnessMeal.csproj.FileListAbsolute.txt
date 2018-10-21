@@ -253,3 +253,6 @@ C:\Users\czcz2\WebApp\FitnessMeal\FitnessMeal\bin\System.Security.Cryptography.A
 C:\Users\czcz2\WebApp\FitnessMeal\FitnessMeal\bin\System.Security.Cryptography.Encoding.dll
 C:\Users\czcz2\WebApp\FitnessMeal\FitnessMeal\bin\System.Security.Cryptography.Primitives.dll
 C:\Users\czcz2\WebApp\FitnessMeal\FitnessMeal\bin\System.Security.Cryptography.X509Certificates.dll
+C:\Users\czcz2\WebApp\FitnessMeal\FitnessMeal\bin\SendGrid.dll
+C:\Users\czcz2\WebApp\FitnessMeal\FitnessMeal\bin\SendGrid.pdb
+C:\Users\czcz2\WebApp\FitnessMeal\FitnessMeal\bin\SendGrid.xml

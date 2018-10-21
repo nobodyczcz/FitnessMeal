@@ -131,6 +131,15 @@ namespace FitnessMeal.Controllers
                 newOrder.TOTAL_ENERGY = data.totalEnergy;
                 newOrder.USER_ID = userID;
                 newOrder.STATE = "waiting";
+
+
+                var restTime = db.Restaurants.Find(newOrder.RESTAURANT_ID);
+                if (newOrder.PICK_UP_TIME.TimeOfDay < restTime.OPENTIME || newOrder.PICK_UP_TIME.TimeOfDay>restTime.CLOSETIME)
+                {
+
+                    return Json(new { result = "failed",reason="Invalid Pick-up Time" });
+                }
+
                 db.RESERVE_PICK_UP.Add(newOrder);
                 db.SaveChanges();
                 var newID = newOrder.ORDER_ID;
@@ -178,17 +187,25 @@ namespace FitnessMeal.Controllers
         public ActionResult ChangeState(int id,string action)
         {
             var order = db.RESERVE_PICK_UP.Find(id);
+            var subject = "";
+            var content = "";
             if (action=="confirm")
             {
                 order.STATE = "confirmed";
+                subject = "Order conformed";
+                content = "Your order had been conformed, we will notice you when it is ready for pick up";
             }
             else if (action == "refuse")
             {
                 order.STATE = "refused";
+                subject = "Order Refused";
+                content = "Your order had been refused by the restaurant, please try another one";
             }
             else if (action == "ready")
             {
                 order.STATE = "ready";
+                subject = "Order Ready";
+                content = "Your orderis ready for pick up";
             }
             else if (action == "done")
             {
@@ -196,6 +213,12 @@ namespace FitnessMeal.Controllers
             }
             db.Entry(order).State = EntityState.Modified;
             db.SaveChanges();
+
+            if (action != "done") {
+                var email = new Email();
+                email.Send(id, subject, content);
+            }
+            
 
             return Json(new {result="success" });
         }
@@ -211,6 +234,11 @@ namespace FitnessMeal.Controllers
             order.PICK_UP_TIME = end;
             db.Entry(order).State = EntityState.Modified;
             db.SaveChanges();
+
+            var subject = "Important! Pick up time change!";
+            var content = "We are so sorry to tell you that your pick-up time had been change to" + end.ToString("YYYY-MM-DD HH:MM");
+            var email = new Email();
+            email.Send(id, subject, content);
             return Json(new { result = "success" });
         }
 

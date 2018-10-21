@@ -14,9 +14,18 @@
             <button class="btn btn-warning" id="dayView">Today</button>
             <button class="btn btn-warning" id="tomorrow">Tomorrow</button>
             <button class="btn btn-warning" id="halfDay">6 Hour View</button>
+            <button class="btn btn-warning" id="3hour">3 Hour View</button>
+            <button class="btn btn-warning" id="1hour">1 Hour View</button>
+
         </div>
         <div id="visualization">
         </div>
+        <div>
+            <p>Hint: You can reschedule an reservation by directly select and drag it to new place.</p>
+            <p>Hint: After you click button on an reservation or reschedule an reservation, an Notification Email will sent to user.</p>
+        </div>
+        <h6>Action logger</h6>
+        <div class="actionLog" id="actionLog"> </div>
     </div>
 
 </div>
@@ -90,7 +99,7 @@
 
                 newItem.content = button + newItem.content;
 
-                var itemString="";
+                var itemString = newItem.id+" ";
                 order.items.forEach(function (i) {
                     itemString = itemString + i.itemName + " X " + i.quantity + " ";
                 })
@@ -115,7 +124,7 @@
             end: moment(moment().format("YYYY-MM-DD")).add(1, "day"),
             zoomKey: 'altKey',
             zoomMax: 604800000,
-            zoomMin: 10800000,
+            zoomMin: 3600000,
             horizontalScroll: true,
 
             editable: {
@@ -161,6 +170,15 @@
 
             timeline.setWindow(moment().add(-3, "hour"), moment().add(+3, "hour"));
         };
+        document.getElementById('3hour').onclick = function () {
+
+            timeline.setWindow(moment().add(-1.5, "hour"), moment().add(+1.5, "hour"));
+        };
+        document.getElementById('1hour').onclick = function () {
+
+            timeline.setWindow(moment().add(-0.5, "hour"), moment().add(+0.5, "hour"));
+        };
+
 
         //change state
         function changeState(button) {
@@ -184,10 +202,10 @@
         function SuccessFunction(id,action) {
             var data = timeline.itemSet.items[id];
             var button="";
-
+            
              if (action == "confirm") {
                 data.data.className = "yellow";
-                button = '<button class="btn btn-sm btn-primary btn-round xs" id=' + id + ' value="ready" onclick="changeState(this)">Ready</button>';
+                 button = '<button class="btn btn-sm btn-primary btn-round xs" id=' + id + ' value="ready" onclick="changeState(this)">Ready</button>';
             }
             else if (action == "ready") {
                 data.data.className = "green";
@@ -200,11 +218,14 @@
             else if (action == "done") {
                 data.data.className = "gray";
             }
-
+            
             data.data.content = button + itemContent[id];
             console.log(data.data.content);
             timeline.itemSet.items[id].setData(data.data);
+            var log = "<p>Order id:" + id + " Action: " + action + ". Notification E-mail send to User</p>";
+            addLog(log);
         };
+
 
         function prettyConfirm(title, text, callback) {
             swal({
@@ -226,16 +247,27 @@
                 data: {
                     "id": orderID,
                     "start": start,
-                    "end":end,
+                    "end": end,
                     "__RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val()
                 },
-                error: errorFunction ,
+                success: function (data) {logChangeTime(orderID,start,end)} ,
             }
             )
         }
 
         var errorFunction = function (error) {
             console.log(error)
+        }
+        function logChangeTime(id,start,end) {
+            content = "<p>Order id:" + id + " Change time to:" + start + "~" + end +". Notification E-mail send to User<p>";
+            addLog(content);
+        }
+
+        function addLog(newlog) {
+            content = $("#actionLog").html();
+            content = newlog + content;
+            $("#actionLog").html(content);
+
         }
 
         

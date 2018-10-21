@@ -41,6 +41,13 @@
     height: 100% ;
 }
 
+.actionLog {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    min-height:20px;
+}
+
 .two {
     display: table-cell;
     height:100%;
