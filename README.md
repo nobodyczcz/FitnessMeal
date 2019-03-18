@@ -10,5 +10,6 @@ User can search restaurant by distance, view available foods with healthy inform
 User will receive notification when their orders are confirmed or ready to serve.
 
 # Screenshots
-
-
+![screen](https://github.com/nobodyczcz/FitnessMeal/blob/master/FitnessMeal/screenshots/2019-03-19%20005905.png)
+![screen](https://github.com/nobodyczcz/FitnessMeal/blob/master/FitnessMeal/screenshots/2019-03-19%20010102.png)
+![screen](https://github.com/nobodyczcz/FitnessMeal/blob/master/FitnessMeal/screenshots/2019-03-19%20010506.png?raw=true)
